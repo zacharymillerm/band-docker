@@ -1558,7 +1558,7 @@ const CatalogInfo = {
     ],
     selectBoxInfo: [
       {
-        name: "blog_type",
+        name: "blog_types",
         label: "Вид мероприятия",
         label2: "Все виды мероприятий",
         option: ["городское", "корпоративное", "тур", "частное"],
@@ -1627,7 +1627,7 @@ const CatalogInfo = {
     ],
     selectBoxInfo: [
       {
-        name: "blog_type",
+        name: "blog_types",
         label: "Вид мероприятия",
         label2:"Все виды мероприятия",
         option: ["Частное", "Тур", "Корпоративное", "Городское"]

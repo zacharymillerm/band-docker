@@ -53,6 +53,8 @@ if (!function_exists('uploadVideoOrImage')) {
 
             // Convert the video format
             $storedUrl = convertVideoFormat($videoPath, $convertedPath);
+            
+            Storage::disk('public')->delete($videoPath);
 
             Log::info('storedUrl: ' . $storedUrl);
         } else {

@@ -72,12 +72,7 @@ const DetailSection = ({
   checkText,
   activeType,
 }) => {
-  const moreTitle =
-    type === "case"
-      ? "КЕЙСЫ"
-      : type === "platform"
-      ? "ПЛОЩАДКИ"
-      : "ОБОРУДОВАНИЕ";
+  type === "case" ? "КЕЙСЫ" : type === "platform" ? "ПЛОЩАДКИ" : "ОБОРУДОВАНИЕ";
   const [result, setResult] = useState([]);
   const [sliceData, setSliceData] = useState([]);
   const [fieldData, setFieldData] = useState([]);
@@ -85,6 +80,7 @@ const DetailSection = ({
   const [selectedValues, setSelectedValues] = useState({});
   const [searchData, setSearchData] = useState({
     blog_type: "",
+    blog_types: "",
     site_name: "",
     startDate: "",
     venue: "",
@@ -163,12 +159,25 @@ const DetailSection = ({
               new Set(data?.map((item) => item.equipment_names).flat())
             ).filter((name) => name !== null && name !== undefined),
           };
-
         case "site_name":
           return {
             ...field,
             option: Array.from(
               new Set(data?.map((item) => item.site_name).flat())
+            ).filter((name) => name !== null && name !== undefined),
+          };
+        case "blog_types":
+          return {
+            ...field,
+            // option: Array.from(
+            //   new Set(data?.map((item) => item.blog_types).flat())
+            // ).filter((name) => name !== null && name !== undefined),
+          };
+        case "blog_type":
+          return {
+            ...field,
+            option: Array.from(
+              new Set(data?.map((item) => item.blog_type).flat())
             ).filter((name) => name !== null && name !== undefined),
           };
         case "cities":
@@ -215,6 +224,7 @@ const DetailSection = ({
     e.preventDefault();
     setSearchData({
       blog_type: "",
+      blog_types: "",
       site_type: "",
       date: "",
       venue: "",
@@ -235,13 +245,19 @@ const DetailSection = ({
   const handleSearch = (e) => {
     e.preventDefault();
     handleClose();
-
     const filteredData = data.filter(
       (item) =>
         (!searchData.blog_type ||
           item.blog_type.some((blog_type) =>
             blog_type.toUpperCase().includes(searchData.blog_type.toUpperCase())
           )) &&
+        (!searchData.blog_types ||
+          (item.blog_types != null &&
+            item.blog_types.some((blog_type) =>
+              blog_type
+                .toLowerCase()
+                .includes(searchData.blog_types.toLowerCase())
+            ))) &&
         (!searchData.site_name || item.site_name === searchData.site_name) &&
         (!searchData.default_site ||
           item.site_name === searchData.default_site) &&

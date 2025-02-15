@@ -52,7 +52,7 @@ const NewSite = () => {
     tags: Data?.tags || [],
     siteTags: Data?.siteTags || [],
     equipment_type: Data?.equipment_type || [],
-    blog_type: Data?.blog_type[0] || "",
+    // blog_type: Data?.blog_type[0] || "",
     queue: Data?.queue || 0,
     cities: Data?.cities[0] || "",
     title: Data?.title || "",
@@ -136,11 +136,11 @@ const NewSite = () => {
       name: "blog_type",
       placeholder: "ВХОДНАЯ ТИП",
       option: [
-        "Все типы площадок",
-        "Рестораны",
-        "Конференц залы",
-        "Загородные площадки",
-        "Концертные залы",
+
+        "Частное",
+        "Тур",
+        "Корпоративное",
+        "Городское",
       ],
     },
     {
@@ -205,8 +205,8 @@ const NewSite = () => {
         formData[key].forEach((item) =>
           newFormData.append("site_type[]", item)
         );
-      } else if (key === "blog_type") {
-        newFormData.append("blog_type[]", formData[key]);
+      // } else if (key === "blog_type") {
+      //   newFormData.append("blog_type[]", formData[key]);
       } else if (key === "siteTags") {
         newFormData.append("siteTags", JSON.stringify(siteTags));
       } else if (key === "video") {
@@ -429,14 +429,14 @@ const NewSite = () => {
               )}
             />
           </Box>
-          <Box sx={{ width: "100%" }}>
+          {/* <Box sx={{ width: "100%" }}>
             <Typography>{inputinfo[5].title}</Typography>
             <SelectBox
               value={formData[inputinfo[5].name]}
               item={inputinfo[5]}
               handleSelect={handleChange}
             />
-          </Box>
+          </Box> */}
 
           <div className="">
             <div>

@@ -12,7 +12,18 @@ class SiteController extends Controller
     public function index()
     {
         try {
-            $data = Site::orderBy('queue', 'desc')->with('blogs')->get();
+            $sites = Site::orderBy('queue', 'desc')->with('blogs')->get();
+
+            $data = $sites->map(function ($site) {
+                $siteData = $site->toArray();
+
+                unset($siteData['blogs']);
+
+                $siteData['blog_types'] = $site->blogs->pluck('blog_type')->flatten()->unique()->values();
+
+                return $siteData;
+            });
+
             return response()->json($data);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error fetching data'], 400);
@@ -58,16 +69,15 @@ class SiteController extends Controller
                 ? uploadVideoOrImage($request->file('video'), 'site') // Adjust path as needed
                 : $site->video;
 
-                if ($request->file('video')) {
-                    \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $site->video));
-                }
+            if ($request->file('video')) {
+                \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $site->video));
+            }
             $site->update($data);
 
             return response()->json([
                 'message' => 'site successfully updated!',
                 'updatedsite' => $site,
             ], 200);
-
         } catch (\Exception $e) {
             \Log::error('Error updating site: ' . $e->getMessage());
             return response()->json(['error' => 'Error updating site data'], 400);
@@ -78,7 +88,7 @@ class SiteController extends Controller
     {
         try {
             $siteToDelete = Site::findOrFail($id);
-            
+
             if ($siteToDelete->video) {
                 \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $siteToDelete->video));
             }
@@ -155,16 +165,15 @@ class SiteController extends Controller
                 //         WHEN id = {$request->firstBlogId} THEN {$request->secondBlogId}
                 //         WHEN id = {$request->secondBlogId} THEN {$request->firstBlogId}
                 //     END")]);
-            
-            return response()->json([
-                'message' => 'Site IDs swapped successfully',
-                'blogs' => [
-                    'first' => $firstBlog->fresh(),
-                    'second' => $secondBlog->fresh()
-                ]
-            ]);
-        });
 
+                return response()->json([
+                    'message' => 'Site IDs swapped successfully',
+                    'blogs' => [
+                        'first' => $firstBlog->fresh(),
+                        'second' => $secondBlog->fresh()
+                    ]
+                ]);
+            });
         } catch (\Exception $error) {
             \Log::error('Error swapping blog IDs: ' . $error->getMessage());
             return response()->json([
@@ -173,7 +182,4 @@ class SiteController extends Controller
             ], 500);
         }
     }
-
-
-
 }

@@ -43,6 +43,7 @@ const CatalogOfSites = ({ progress, type, catalogInfo }) => {
   useEffect(() => {
     getSite().then((data) => {
       data && setSites(data);
+      console.log(data)
       setFilteredData(data);
     });
   }, []);
