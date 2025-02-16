@@ -188,7 +188,7 @@ const CreateUser = () => {
       />
       <OutLinedButton
         onClick={handleFinish}
-        title="Конец"
+        title="Назад"
       />
       </div>
     </form>
