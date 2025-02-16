@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { Snackbar, Alert } from "@mui/material";
 import { CheckBox1, Input } from "@/components/Inputs";
 import { AdminPageWrapper } from "../AdminSection";
-import { BlackButton } from "@/components/Buttons";
+import { BlackButton, OutLinedButton } from "@/components/Buttons";
 import { register, updateUser } from "@/api/adminAPI";
+import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
 const CreateUser = () => {
   const searchParams = useSearchParams();
+  const navigate = useRouter();
+
   const data = JSON.parse(searchParams.get("data"));
 
   const [formData, setFormData] = useState({
@@ -79,6 +82,10 @@ const CreateUser = () => {
         });
     }
   };
+  
+  const handleFinish = () => {
+    navigate.push('/admin/setting');
+  }
 
   const handleCloseSnackbar = () => {
     setNotification({ ...notification, open: false });
@@ -118,7 +125,7 @@ const CreateUser = () => {
   ];
 
   useEffect(() => {
-    if (data) setFormData({ ...data, password: ""});
+    if (data) setFormData(data);
   }, []);
 
   const content = (
@@ -173,10 +180,17 @@ const CreateUser = () => {
           ))}
         </div>
       </div>
+      <div className="spaceBetween">
       <BlackButton
         type="submit"
         title={data ? "изменить данные пользователя" : "Добавить пользователя"}
+        style={{marginRight: "20px"}}
       />
+      <OutLinedButton
+        onClick={handleFinish}
+        title="Конец"
+      />
+      </div>
     </form>
   );
 

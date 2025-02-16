@@ -123,7 +123,7 @@ class AdminAuthController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'lastname' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8',
+            'password' => 'required|string|min:8|max:255',
             'adding' => 'sometimes|boolean',
             'editing' => 'sometimes|boolean',
             'deleting' => 'sometimes|boolean',
@@ -131,6 +131,7 @@ class AdminAuthController extends Controller
 
         try {
             $user->name = $validatedData['name'] ?? $user->name;
+            $user->lastname =  $validatedData['lastname'] ?? $user->lastname;
             $user->email = $validatedData['email'] ?? $user->email;
 
             if ($validatedData['password']) {

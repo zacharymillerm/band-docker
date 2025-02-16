@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Checkbox,
@@ -12,30 +12,50 @@ import { greySearch } from "../../assets";
 import Image from "next/image";
 // import "../../styles/components/input.css";
 
-export const Input = (props) => {
-  const {
-    color,
-    item,
-    value,
-    handleChange,
-    onKeyDown,
-    disabled,
-    required
-  } = props;
+export const Input = ({
+  color,
+  item,
+  value,
+  handleChange,
+  onKeyDown,
+  disabled,
+}) => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   return (
-    <input
-      className="InputText x14 alignCenter"
-      style={{ backgroundColor: disabled ? "#f9f9f9" : color }}
-      placeholder={item.placeholder}
-      name={item.name}
-      type={item.type}
-      onChange={handleChange}
-      value={value}
-      onKeyDown={onKeyDown}
-      required={!!required}
-      disabled={disabled}
-      {...props}
-    />
+    <div style={{ position: 'relative' }}>
+      <input
+        className="InputText x14 alignCenter"
+        style={{ backgroundColor: disabled ? "#f9f9f9" : color }}
+        placeholder={item.placeholder}
+        name={item.name}
+        type={isPasswordVisible && item.type === 'password' ? 'text' : item.type}
+        onChange={handleChange}
+        value={value}
+        onKeyDown={onKeyDown}
+        required
+        disabled={disabled}
+      />
+      {item.type === 'password' && (
+        <span
+          onClick={togglePasswordVisibility}
+          style={{
+            position: 'absolute',
+            right: '10px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            cursor: 'pointer',
+            color: 'gray'
+          }}
+        >
+          {isPasswordVisible ? 'Скрыть' : 'Показать'} {/* Use icons or text for show/hide */}
+        </span>
+      )}
+    </div>
   );
 };
 
