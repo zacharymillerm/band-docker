@@ -326,7 +326,6 @@ const NewCase = () => {
 
     for (const validation of validations) {
       if (validation.condition) {
-        console.log("validation:", validation);
         setLoading(false);
         setAlertMessage(validation.message);
         setAlertOpen(true);

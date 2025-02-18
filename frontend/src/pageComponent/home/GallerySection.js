@@ -14,7 +14,7 @@ const GallerySection = ({ title, galleryType }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > galleryRef.current.clientHeight) {
+      if (window.scrollY > galleryRef.current?.clientHeight) {
         setIsShrunk(true);
       } else {
         setIsShrunk(false);

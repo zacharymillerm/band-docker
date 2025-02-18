@@ -22,7 +22,7 @@
   width: 100% !important;
 }
 
-.leaflet-marker-icon .leaflet-zoom-animated .leaflet-interactive{
+.leaflet-marker-icon .leaflet-zoom-animated .leaflet-interactive {
   margin-left: 0 !important;
 }
 
@@ -123,6 +123,8 @@ body {
   line-height: clamp(44px, 6vw, 93.99px);
   color: var(--secondaryWhiteColor);
   letter-spacing: -0.03em;
+  font-weight: 400;
+  margin: 30px 0;
 }
 
 .spaceAround {
@@ -133,9 +135,8 @@ body {
 
 .spaceEnd {
   display: flex;
-  align-items: flex-end;
+  align-items: end;
   justify-content: space-between;
-  flex-wrap: wrap;
 }
 
 .alignCenter {
@@ -179,7 +180,8 @@ video {
   font-weight: 400;
 }
 
-@media (min-width: 992px) { /* Adjust breakpoint as needed */
+@media (min-width: 992px) {
+  /* Adjust breakpoint as needed */
   .pageTitle-1 {
     margin-bottom: 40px;
     margin-top: 32px;
@@ -197,14 +199,21 @@ video {
   font-size: clamp(30px, 4vw, 58px);
   line-height: clamp(36.15px, 4vw, 69.89px);
   color: var(--secondaryWhiteColor);
-  letter-spacing: 0.01em;
+  letter-spacing: -0.03em;
   font-weight: 400;
+}
+
+@media (max-width: 640px) {
+  .sectionTitle-Center {
+    text-align: center;
+  }
 }
 
 .cardBigTitle {
   font-family: var(--font-russo-one);
   font-size: clamp(20px, 3vw, 30px);
-  line-height: clamp(24.1px, 1vw, 36.15px);
+  line-height: clamp(24px, 1vw, 36px);
+  margin: 10px 0;
 }
 
 .cardTitle {
@@ -240,6 +249,12 @@ video {
 
 .mobileShow {
   display: block;
+}
+
+@media (max-width: 560px) {
+  .tableFlex {
+    flex-direction: column;
+  }
 }
 
 .mobileHidden {

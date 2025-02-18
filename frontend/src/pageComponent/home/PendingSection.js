@@ -4,7 +4,6 @@ import { ChichaBox } from "../../components/ChichaBox";
 import { pendingCardInfo } from "../../constant/group";
 
 const PendingSection = () => {
-  console.log('pendingCardInfo', pendingCardInfo);
   const content = (
     <>
       <h2

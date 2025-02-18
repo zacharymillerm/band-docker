@@ -16,7 +16,7 @@ const AdminHeader = () => {
   const navigate = useRouter();
   const location = useRouter();
   const [isShrunk, setIsShrunk] = useState(false);
-  const [isHambuger, setIsHambuger] = useState(false);
+  const [isHamburger, setisHamburger] = useState(false);
   const isMobile = useMediaQuery("(max-width: 1000px)");
   const [token, setToken] = useState(null);
 
@@ -63,7 +63,7 @@ const AdminHeader = () => {
   };
 
   const hambugerClick = () => {
-    isHambuger ? setIsHambuger(false) : setIsHambuger(true);
+    isHamburger ? setisHamburger(false) : setisHamburger(true);
   };
 
   const handleSetting = () => {
@@ -112,94 +112,93 @@ const AdminHeader = () => {
   return (
     <>
       {/* {userInfo.name && ( */}
-        <HeaderWrapper
-          content={
-            <>
-              <div
-                className={`spaceBetween topHeader ${
-                  isShrunk ? "scrolled" : ""
-                }`}
-              >
-                <div className="alignCenter">
-                  <Image
-                    onClick={() => {
-                      navigate.push("/");
-                    }}
-                    src={logo}
-                    alt="Company Logo"
-                    className="logo"
-                  />
-                  <div className="adminHeaderLink">
-                    <Link href="/admin">Страница администратора</Link>
-                    {(addLink.link === "create" || addLink.link === "edit") && (
-                      <span className="adminHeaderSpan">
-                        <span>&nbsp;&nbsp; / &nbsp;&nbsp;</span>
-                        <Link href="/admin/setting">Настройки аккаунта</Link>
-                      </span>
-                    )}
-                    {addLink.link !== "" && (
-                      <span className="adminHeaderSpan">
-                        <span>&nbsp;&nbsp; / &nbsp;&nbsp;</span>
-                        <Link href={`/admin/${addLink.link}`}>
-                          {addLink.title}
-                        </Link>
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="requestBtn alignCenter" style={{ gap: "15px" }}>
-                  <div className="adminHeaderLink">
-                    <span style={{ fontSize: "12px" }}>
-                      {userInfo.name} {userInfo.lastname}
+      <HeaderWrapper
+        content={
+          <>
+            <div
+              className={`spaceBetween topHeader ${isShrunk ? "scrolled" : ""}`}
+            >
+              <div className="alignCenter">
+                <Image
+                  onClick={() => {
+                    navigate.push("/");
+                  }}
+                  src={logo}
+                  alt="Company Logo"
+                  className="logo"
+                />
+                <div className="adminHeaderLink adminPageText">
+                  <Link href="/admin">Страница администратора</Link>
+                  {(addLink.link === "create" || addLink.link === "edit") && (
+                    <span className="adminHeaderSpan">
+                      <span>&nbsp;&nbsp; / &nbsp;&nbsp;</span>
+                      <Link href="/admin/setting">Настройки аккаунта</Link>
                     </span>
-                  </div>
-                  <Image
-                    className="headerAvatar"
-                    src={adminUser}
-                    alt="Admin User Avatar"
-                  />
-                  <DefaultButton onClick={handleSetting} title="настройки" />
-                  <Image
-                    src={lightLogout}
-                    alt="Logout Icon"
-                    onClick={handleLogout}
-                    style={{ cursor: "pointer" }}
-                  />
+                  )}
+                  {addLink.link !== "" && (
+                    <span className="adminHeaderSpan">
+                      <span>&nbsp;&nbsp; / &nbsp;&nbsp;</span>
+                      <Link href={`/admin/${addLink.link}`}>
+                        {addLink.title}
+                      </Link>
+                    </span>
+                  )}
                 </div>
               </div>
-              <hr />
-              {addLink.smallLink && (
-                <div className="container">
-                  <div className="adminHeaderScrollLink">
-                    {addLink.smallLink.map((item, index) => (
-                      <MobileHeaderLink
-                        key={index}
-                        link={item.link}
-                        content={item.title}
-                      />
-                    ))}
-                  </div>
+              <div className="requestBtn alignCenter" style={{ gap: "15px" }}>
+                <div className="adminHeaderLink">
+                  <span style={{ fontSize: "12px" }}>
+                    {userInfo.name} {userInfo.lastname}
+                  </span>
+                </div>
+                <Image
+                  className="headerAvatar"
+                  src={adminUser}
+                  alt="Admin User Avatar"
+                />
+                <DefaultButton onClick={handleSetting} title="настройки" />
+                <Image
+                  src={lightLogout}
+                  alt="Logout Icon"
+                  onClick={handleLogout}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+              {addLink.smallLink && isMobile && (
+                <div className="adminHeaderHamburger">
+                  <Image
+                    src={hambuger}
+                    onClick={hambugerClick}
+                    alt="hambuger"
+                  />
                 </div>
               )}
-              {addLink.smallLink && isMobile && isHambuger && (
-                <MobileAdminHeader
-                  item={adminLinkInfo.admin}
-                  isHambuger={isHambuger}
-                  setIsHambuger={setIsHambuger}
-                />
-              )}
-              {isShrunk && <hr />}
-              {addLink.smallLink && isMobile && (
-                <Image
-                  src={hambuger}
-                  onClick={hambugerClick}
-                  alt="hambuger"
-                  className="adminHeaderHanbuger"
-                />
-              )}
-            </>
-          }
-        />
+            </div>
+            <hr />
+            {addLink.smallLink && (
+              <div className="container">
+                <div className="adminHeaderScrollLink">
+                  {addLink.smallLink.map((item, index) => (
+                    <MobileHeaderLink
+                      key={index}
+                      link={item.link}
+                      content={item.title}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+            {addLink.smallLink && isMobile && isHamburger && (
+              <MobileAdminHeader
+                item={adminLinkInfo.admin}
+                isHamburger={isHamburger}
+                setisHamburger={setisHamburger}
+              />
+            )}
+            {isShrunk && <hr />}
+          </>
+        }
+      />
       {/* )} */}
     </>
   );

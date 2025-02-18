@@ -36,7 +36,7 @@ const PlantHero = ({ team, avatar }) => {
       </h1>
       <div
         style={{
-          backgroundImage: `url(${design})`,
+          backgroundImage: `url(${design.src})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPositionX: "right",

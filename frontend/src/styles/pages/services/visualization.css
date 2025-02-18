@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 20px;
-  padding-top: clamp(40px, 10vw, 60px);
+  /* padding-top: clamp(40px, 10vw, 60px); */
 }
 
 .processItem .cardDescription {
@@ -31,19 +31,58 @@
   rotate: 50deg;
 }
 
+/* Show horizontal arrows only on desktop */
 .arrowShow {
   display: flex;
 }
 
-.verticalBorder {
-  display: none;
-  position: absolute;
-  right: 0;
-  border-right: 2px solid black;
+/* Hide horizontal arrows on mobile */
+@media (max-width: 1140px) {
+  .arrowShow {
+    display: none !important;
+  }
+}
+
+/* Ensure vertical arrows appear only in mobile view */
+@media (max-width: 550px) {
+  .verticalBorder {
+    border-right: 2px solid black;
+  }
+
+  .verticalBorder::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    bottom: 0;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: black;
+    rotate: 45deg;
+  }
+
+  .processItem {
+    flex: 1 1 auto;
+    transition: flex-basis 0.5s ease;
+    position: relative; /* Ensure absolute positioning works properly */
+  }
+
+  .processItem .cardDescription {
+    width: 220px;
+    letter-spacing: -0.03em;
+  }
+
+  .ArrowRect {
+    margin-top: 10px; /* Adjust the top margin for better alignment */
+  }
+
+  /* Adjust arrow for each item */
+  .processItem .arrowShow {
+    display: none; /* Hide horizontal arrows on mobile */
+  }
 }
 
 /* ExampleCase */
-
 .caseLeftSection {
   width: 40.6%;
 }
@@ -87,6 +126,7 @@
   color: var(--secondaryWhiteColor);
 }
 
+/* Ensure case sections take full width in smaller screens */
 @media (max-width: 1430px) {
   .caseRightSection,
   .caseLeftSection {
@@ -94,12 +134,14 @@
   }
 }
 
-@media (max-width: 1430px) {
+/* Ensure horizontal arrows only appear on large screens */
+@media (min-width: 1141px) {
   .arrowShow {
-    display: none !important;
+    display: flex !important;
   }
 }
 
+/* Adjustments for medium-sized screens */
 @media (max-width: 1140px) {
   .workProcessSquare {
     justify-content: space-around !important;
@@ -111,6 +153,7 @@
   }
 }
 
+/* Adjustments for small screens */
 @media (max-width: 636px) {
   .workProcessSquare {
     justify-content: space-between !important;
@@ -126,18 +169,24 @@
   }
 }
 
-@media (max-width: 450px) {
+/* Ensure vertical arrows appear in mobile view */
+@media (max-width: 550px) {
   .processItem {
     flex: 1 1 auto;
     transition: flex-basis 0.5s ease;
-  }
-
-  .verticalBorder {
-    display: flex;
+    position: relative;
   }
 
   .processItem .cardDescription {
     width: 221px;
     letter-spacing: -0.03em;
+  }
+
+  .ArrowRect {
+    margin-top: 10px; /* Adjust the top margin for better alignment */
+  }
+
+  .processItem .arrowShow {
+    display: none; /* Hide horizontal arrows on mobile */
   }
 }

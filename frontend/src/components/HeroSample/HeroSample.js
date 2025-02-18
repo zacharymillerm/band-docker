@@ -30,7 +30,7 @@ const HeroSample = (props) => {
       >
         <Image src={heroSectionInfo.bgUrl} alt="bgUrl" />
         {heroSectionInfo.text ? (
-          <div className="spaceEnd">
+          <div className="spaceEnd heroRow">
             <h1 className="heroTitle heroTitleWidth" style={{ marginTop: "25px" }}>
               {heroSectionInfo.title.split("&&").map((text, index) => (
                 <React.Fragment key={index}>
@@ -47,7 +47,7 @@ const HeroSample = (props) => {
                 {heroSectionInfo.text[0]}
               </p>
               <p
-                className="cardDescription"
+                // className="cardDescription"
                 style={{ color: "var(--secondaryWhiteColor)" }}
               >
                 {heroSectionInfo.text[1]}

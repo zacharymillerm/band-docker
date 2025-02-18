@@ -18,7 +18,7 @@ const Header = () => {
   const navigate = useRouter();
   const [isVisible, setIsVisible] = useState(true);
   const componentRef = useRef(null);
-  const [isHambuger, setIsHambuger] = useState(false);
+  const [isHamburger, setisHamburger] = useState(false);
   const isMobile = useMediaQuery("(max-width: 850px)");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -56,7 +56,7 @@ const Header = () => {
 
   // Handle hamburger menu click
   const handleClick = () => {
-    isHambuger === false ? setIsHambuger(true) : setIsHambuger(false);
+    isHamburger === false ? setisHamburger(true) : setisHamburger(false);
   };
 
   // Handle change in the search input
@@ -249,7 +249,7 @@ const Header = () => {
           <hr />
           <BottomHeader />
           {!isMobile && isShrunk && <hr />}
-          {isHambuger && isMobile && <MobileHeaderLink />}
+          {isHamburger && isMobile && <MobileHeaderLink />}
         </>
       }
     />

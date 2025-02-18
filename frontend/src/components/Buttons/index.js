@@ -91,7 +91,7 @@ const ArrowDefaultButton = ({ title, onClick }) => (
   <button
     onClick={onClick}
     className="button defaultButton "
-    style={{ height: "39px", paddingRight: "24px", paddingLeft: "24px" }}
+    style={{ height: "39px", paddingRight: "20px", paddingLeft: "20px" }}
   >
     {title}
     <Image src={darkArrowup} alt="arrowButton" />

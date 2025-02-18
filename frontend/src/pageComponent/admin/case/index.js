@@ -80,7 +80,6 @@ const NewCase = () => {
 
   // Get the data from URL parameters instead of localStorage
   const Data = getInitialData();
-  console.log(Data);
 
   const [formData, setFormData] = useState({
     cities: Data?.cities || [],
@@ -329,7 +328,6 @@ const NewCase = () => {
 
     for (const validation of validations) {
       if (validation.condition) {
-        console.log("validation:", validation);
         setLoading(false);
         setAlertMessage(validation.message);
         setAlertOpen(true);

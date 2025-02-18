@@ -50,8 +50,8 @@ services:
       - laravel
     volumes:
       - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+      - next_node:/app/node_modules
+      - next_build:/app/.next
     ports:
       - "3000:3000"
     environment:

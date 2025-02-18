@@ -4,8 +4,36 @@
 
 .heroBg img {
   position: absolute;
-  top: -20px;
-  right: 130px;
+  top: -40px;
+  right: 90px;
+  height: 354px;
+  width: 354px;
+  /* background-position: center; */
+  /* background-size: cover; */
+}
+
+.heroTextWidth {
+  flex: 0 0 225px;
+}
+
+/* Adjust width for mobile devices */
+@media (max-width: 768px) {
+  .heroTextWidth {
+    flex: 0;
+    width: 180px;
+  }
+
+  .heroRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.heroTitleWidth {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  flex: 1;
+  /* width: 90%; */
 }
 
 .heroWhiteTopbtn {
@@ -35,18 +63,9 @@
   margin-left: 250px;
 }
 
-.heroTitleWidth {
-  width: 80%;
-}
-
-.heroTextWidth {
-  width: 230px;
-  display: grid;
-  gap: clamp(10px, 1vw, 15px);
-}
-
 .heroLinkWrap {
   margin-top: 65px;
+  align-items: start;
 }
 
 .heroLinkLeft {
@@ -77,15 +96,7 @@
   }
 }
 
-@media(max-width: 1385px) {
-  .heroTitleWidth {
-    width: 100%;
-  }
-
-  .heroTextWidth {
-    margin-top: 30px;
-  }
-
+@media (max-width: 1385px) {
   .events .heroLinkWrap .chichaShow div:nth-child(1),
   .tourConcert .heroLinkWrap .chichaShow div:nth-child(1) {
     margin-left: 0px;
@@ -97,24 +108,12 @@
   }
 }
 
-@media(max-width: 1200px) {
-  .heroBg img {
-    right: 100px;
-  }
-
-}
-
-@media(max-width: 991px) {
-  .heroBg img {
-    right: 60px;
-    height: 80%;
-  }
-}
-
-@media(max-width: 768px) {
-
+@media (max-width: 768px) {
   .heroBg img {
     right: 0px;
+    top: 75px;
+    width: 230px;
+    height: 230px;
   }
 
   .heroWhiteTopbtn {
@@ -138,16 +137,11 @@
   }
 }
 
-@media(max-width: 500px) {
+@media (max-width: 500px) {
   .visualization .heroLinkWrap .chichaHidden div:nth-child(1) {
     width: 100%;
     text-align: center;
     display: flex;
     justify-content: center;
-  }
-
-  .heroBg img {
-    height: 65%;
-    right: 0px;
   }
 }

@@ -18,9 +18,9 @@ const WorkProcess = ({ arrowWidth, title1, title2, data, url, fileName }) => {
   );
 
   const ProcessListObject = ({ item, index }) => (
-    <div className="processItem" style={{ position: "relative" }}>
+    <div className="processItem verticalBorder" style={{ position: "relative", paddingBottom: "20px" }}>
       <div className="alignCenter" style={{ gap: "20px" }}>
-        <h3 className="processListTitle">{item.title}</h3>
+        <h3 className="processListTitle" style={{ margin: 0 }}>{item.title}</h3>
         {index !== 2 && (
           <div className="alignCenter arrowShow">
             <hr className="ArrowLine" style={{ width: arrowWidth }} />
@@ -41,15 +41,6 @@ const WorkProcess = ({ arrowWidth, title1, title2, data, url, fileName }) => {
           <WorkProcessBtn key={index} />
         )
       )}
-      <div
-        className="verticalBorder"
-        style={{ marginTop: item.arrowMargin, height: item.arrow }}
-      >
-        <div
-          className="ArrowRect"
-          style={{ marginTop: item.arrow, marginRight: "-4px" }}
-        ></div>
-      </div>
     </div>
   );
 
@@ -70,7 +61,7 @@ const WorkProcess = ({ arrowWidth, title1, title2, data, url, fileName }) => {
         style={{
           color: `var(--secondaryWhiteHover)`,
           width: "90%",
-          marginBottom: "0px",
+          marginBottom: "30px",
         }}
       >
         {title2}

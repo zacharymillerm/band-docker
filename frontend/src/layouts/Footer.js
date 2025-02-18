@@ -33,7 +33,7 @@ const FooterTop = () => (
           </Link>
         ))}
       </div>
-      <div style={{ display: "flex", gap: "10px" }} className="socialBtn">
+      <div style={{ display: "flex", gap: "10px" }} className="socialBtn footerButtons">
         <ScrollSpyButton
           to="contactSection"
           content={
@@ -151,74 +151,51 @@ const FooterBottom = () => {
     }, 500);
   };
   return (
-    <div className="footerTop">
-      <div className="footerTopLeft footerContactWrap">
+    <div className="footerBottom">
         <div
+        className="footerBottomContact"
           style={{
             display: "grid",
-            gap: "13px",
+            gap: "8px",
             color: `var(--secondaryWhiteColor)`,
           }}
         >
-          <p className="x18 alignCenter" style={{ gap: "11px" }}>
+          <p className="x18 alignCenter" style={{ gap: "12px" }}>
             <Image src={whiteMail} alt="icon" />
             <ToEmail email="pr@zavodshow.ru" />
           </p>
-          <p className="x18 alignCenter" style={{ gap: "11px" }}>
+          <p className="x18 alignCenter" style={{ gap: "12px" }}>
             <Image src={whitePhone} alt="icon" />
             <ToPhone phoneNumber="+7 495 720 12-82" />
           </p>
         </div>
-      </div>
-      <div className="footerTopRight">
-        <p className="footerContact">
+      <div className="footerBottomAddress">
           Москва, г. Реутов, ул. Победы, 20
           <br />
-          Пн-Сб:&nbsp;10-19 МСК
-        </p>
-        <div className="footerTopLeft1">
-          <div
-            style={{
-              display: "grid",
-              gap: "13px",
-              color: `var(--secondaryWhiteColor)`,
-            }}
-          >
-            <p className="x18 alignCenter" style={{ gap: "11px" }}>
-              <Image src={whiteMail} alt="icon" />
-              info@zavodshow.ru
-            </p>
-            <p className="x18 alignCenter" style={{ gap: "11px" }}>
-              <Image src={whitePhone} alt="icon" />
-              +7 906 065-28-33
-            </p>
-          </div>
-        </div>
-        <div className="footerBottomLink" style={{ marginBottom: "20px" }}>
-          <span onClick={goPlantShowSection} className="footerSpacialLink">
-            © ЗАВОД ШОУ
-          </span>
-          {/* <a className="footerSpacialLink" target="_blank" rel="noreferrer" href="https://linkedin.com">© ЗАВОД ШОУ</a> */}
-          <Link className="footerSpacialLink" href="/policy">
-            Политика конфиденциальности
-          </Link>
-          <a
-            className="footerSpacialLink"
-            target="_blank"
-            rel="noreferrer"
-            href="https://lard.digital"
-          >
-            Разработка сайта
-          </a>
-          <a
-            className="footerSpacialLink"
-            target="_blank"
-            rel="noreferrer"
-            href="https://drive.google.com/file/d/1GBdaQc7jWGSIvKF_bxRxT2gECSaikiZi/view"
-          >
-            СОУТ
-          </a>
-        </div>
+          Пн-Сб: 10-19 МСК
+      </div>
+      <div className="footerBottomLink" style={{ marginBottom: "20px" }}>
+        <span onClick={goPlantShowSection}>
+          © ЗАВОД ШОУ
+        </span>
+        {/* <a target="_blank" rel="noreferrer" href="https://linkedin.com">© ЗАВОД ШОУ</a> */}
+        <Link href="/policy">
+          Политика конфиденциальности
+        </Link>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://lard.digital"
+        >
+          Разработка сайта
+        </a>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://drive.google.com/file/d/1GBdaQc7jWGSIvKF_bxRxT2gECSaikiZi/view"
+        >
+          СОУТ
+        </a>
       </div>
     </div>
   );

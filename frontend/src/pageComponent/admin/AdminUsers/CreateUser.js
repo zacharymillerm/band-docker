@@ -176,7 +176,6 @@ const CreateUser = () => {
               checked={formData[item.name]}
               onChange={handleChecked}
             />
-            // console.log('checked: ', formData?.permission?.includes(item.value))
           ))}
         </div>
       </div>

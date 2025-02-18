@@ -93,7 +93,6 @@ const BestCaseTable = ({ id }) => {
           .catch((error) => {
             handleNotification("Error fetching cases by type", "error");
           });
-        console.log(data);
       })
       .catch((error) => {
         console.log("error", error);

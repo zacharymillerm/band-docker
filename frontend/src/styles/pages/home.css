@@ -4,7 +4,7 @@
   margin: auto;
   width: 100%;
   background-color: var(--primaryBgColor);
-  padding-top: clamp(100px, 18vw, 200px);
+  padding-top: clamp(120px, 18vw, 200px);
   padding-bottom: 1px;
 }
 
@@ -57,11 +57,12 @@
 }
 
 .aboutSection {
-  margin: -50px 0 100px 0;
+  margin: -50px 0 35px 0;
+  padding-bottom: 115px;
 }
 
 .sectionHeader {
-  margin-bottom: clamp(36px, 10vw, 84px);
+  margin-bottom: clamp(36px, 10vw, 64px);
 }
 
 .errorText {
@@ -353,6 +354,7 @@ hr {
 
   .aboutSection {
     margin: 0 0 100px 0;
+    padding-bottom: 115px;
   }
 
   .contactFooter {
@@ -384,7 +386,7 @@ hr {
   .section1,
   .section2,
   .mapWrapper {
-    padding: 0;
+    padding: 5px;
   }
 
   .sectionHeader {

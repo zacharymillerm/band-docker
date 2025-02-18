@@ -5,7 +5,6 @@ import CustomerModal from "@/components/Modals";
 
 const TextPreview = (props) => {
   const { name, avatar, content, file, open, setOpen } = props;
-  console.log('TextPreview', props);
 
   const handleClose = () => setOpen(false);
 

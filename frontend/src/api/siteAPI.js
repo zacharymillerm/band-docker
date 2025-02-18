@@ -52,7 +52,6 @@ export const insertSite = async (formdata) => {
 
 export const updateSite = async (id, formdata) => {
   try {
-    console.log("update")
     const token = sessionStorage.getItem("token");
     const response = await apiClient.post(`/sites/${id}`, formdata, {
       headers: {

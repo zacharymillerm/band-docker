@@ -25,11 +25,12 @@
 .adminDataSection {
   display: flex;
   background-color: var(--secondaryWhiteColor);
-  padding: 23px 23px 23px 38px;
-  margin-bottom: 36px;
+  padding:24px;
+  margin: 20px;
   border-radius: 10px;
   color: #151515;
   gap: 22px;
+  /* width: 90%; */
 }
 
 .adminDataTitle {
@@ -43,7 +44,7 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--badgeBgColor);
-  padding: 30px;
+  padding: 20px;
   box-sizing: border-box;
   border-radius: 10px;
 }
@@ -74,10 +75,12 @@
 
 .adminDirectorySection {
   background-color: var(--secondaryWhiteColor);
-  padding: 45px;
+  padding: 20px;
+  margin: 20px;
   margin-bottom: 80px;
   border-radius: 10px;
   color: #151515;
+  /* width: 90%; */
 }
 
 .adminDirectoryTitle {
@@ -143,6 +146,6 @@
 @media (max-width: 590px) {
   .adminInfoLeft,
   .adminInfoRight {
-    width: 80%;
+    width: 100%;
   }
 }

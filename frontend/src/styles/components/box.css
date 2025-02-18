@@ -6,6 +6,32 @@
   border-radius: clamp(5px, 1vw, 10px);
 }
 
+.bigVideoTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bigVideoTitle__subTitle {
+  font-size: 18px;
+  color: var(--secondaryWhiteColor);
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  line-height: 25px;
+  max-width: 330px;
+  margin-right: 60px;
+}
+
+
+@media (max-width: 640px) {
+  .bigVideoTitle {
+    flex-direction: column;
+  }
+  .bigVideoTitle__subTitle {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}
+
 .bigVideoSquare video,
 .bigVideoSquare img {
   border-radius: clamp(5px, 1vw, 10px);

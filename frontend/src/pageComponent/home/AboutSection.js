@@ -13,7 +13,7 @@ const AboutSection = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${design})`,
+        backgroundImage: `url(${design.src})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -26,7 +26,7 @@ const AboutSection = () => {
           <div
             style={{
               position: "absolute",
-              left: "clamp(0px, 4vw, 40px)",
+              left: "clamp(0px, 4vw, 50px)",
               bottom: -10,
             }}
           >
@@ -36,14 +36,17 @@ const AboutSection = () => {
           <div
             style={{
               position: "absolute",
-              right: "clamp(0px, 4vw, 40px)",
+              right: "clamp(0px, 4vw, 50px)",
               bottom: 10,
             }}
           >
             <TwoChichas img1={chicha94} img2={chicha72} rotate="-30deg" />
           </div>
         </div>
-        <div className="flexWrap itemCenter" style={{ gap: "6px" }}>
+        <div
+          className="flexWrap itemCenter"
+          style={{ gap: "6px", fontSize: "35px" }}
+        >
           <BigTransButton
             title="ОДЕЖДУ СЦЕНЫ И ЛИНОЛЕУМ"
             long={true}

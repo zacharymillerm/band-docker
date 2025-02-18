@@ -227,7 +227,6 @@ const RehearsalTable = ({ id }) => {
   useEffect(() => {
     getRental()
       .then((data) => {
-        console.log('getRental:', data);
         if (data) {
           setRental(data);
         } else {

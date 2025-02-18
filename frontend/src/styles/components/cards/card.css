@@ -8,7 +8,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: start;
   padding-top: 32px;
 }
 
@@ -64,6 +64,17 @@
   border-radius: 5px;
   flex: 1 1 auto;
   transition: flex-basis 0.5s ease;
+}
+
+.blogPadding {
+  padding: 0;
+}
+
+/* Media query for devices wider than 640px */
+@media (min-width: 640px) {
+  .blogPadding {
+    padding:0 50px; /* Set left padding to 50px */
+  }
 }
 
 .blogCardItem {

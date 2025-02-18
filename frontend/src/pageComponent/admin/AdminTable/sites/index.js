@@ -191,7 +191,7 @@ const SitesTable = ({ id }) => {
 
   return (
     <div className="wrapper">
-      <div className="section1">
+      <div className="section1"> 
         <ChichaBox
           content={
             <Box id={id}>

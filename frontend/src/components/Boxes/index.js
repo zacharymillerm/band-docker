@@ -45,15 +45,18 @@ const BigVideoBox = ({ item }) => {
 
   return (
     <div className="sectionWrapper" style={{ paddingLeft: 0, paddingRight: 0 }}>
-      {item.title && (
-        <div
-          className={`sectionHeader section2 ${
-            item.titleCenter ? "itemCenter" : "sectionHeaderTitleSquare"
-          }`}
-        >
-          <h2 className={`sectionTitle `}>{item.title}</h2>
-        </div>
-      )}
+      <div className="bigVideoTitle">
+        {item.title && (
+          <div
+            className={`sectionHeader section2 ${
+              item.titleCenter ? "itemCenter" : "sectionHeaderTitleSquare"
+            }`}
+          >
+            <h2 className="sectionTitle">{item.title}</h2>
+          </div>
+        )}
+        {item.subTitle && <p className="bigVideoTitle__subTitle">{item.subTitle}</p>}
+      </div>
       <div className="bigVideoSquare">
         <video
           controls
@@ -199,7 +202,7 @@ const AdminDataBox = () => {
   };
 
   const handleChange = (disabled) => {
-    setDisabled(disabled)
+    setDisabled(disabled);
     if (!disabled && userData?.email) {
       changeEmailAddress({ email: userData?.email }, userData?.id)
         .then((data) => {
@@ -311,7 +314,9 @@ const AdminDataBox = () => {
                 border: !disabled && "none",
                 background: "transparent",
               }}
-              onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+              onChange={(e) =>
+                setUserData({ ...userData, email: e.target.value })
+              }
               value={userData?.email || ""}
               disabled={!disabled}
             />
@@ -405,7 +410,6 @@ const AdminDirectoryBox = () => {
     deleteUser(data).then((data) => {
       data && alert(data.message);
       getUsers().then((userData) => {
-        console.log('getUsers:', userData);
         setData(userData);
         // let temp;
         // temp = addId(data);
@@ -416,7 +420,6 @@ const AdminDirectoryBox = () => {
 
   useEffect(() => {
     getUsers().then((userData) => {
-      console.log('getUsers:', userData);
       setData(userData);
       // let temp = addId([...userData]);
       // console.log('temp:', temp);
@@ -439,7 +442,7 @@ const AdminDirectoryBox = () => {
         )}
       </div>
       <div style={{ paddingTop: "20px" }}>
-        <DataTable data={data} columns={directoryColumns} user={1}/>
+        <DataTable data={data} columns={directoryColumns} user={1} />
       </div>
     </div>
   );

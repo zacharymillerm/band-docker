@@ -100,25 +100,20 @@ const DataTable = ({ id, columns, data, user = 0 }) => {
       />
       <br />
       {id !== "bestCase" && (
-        <div className="spaceBetween">
+        <div className="spaceBetween tableFlex">
           <CustomPagination
             page={page}
             pageCount={pageCount}
             onPageChange={handlePageChange}
           />
-          <span style={{ paddingRight: "10px" }}>
-            {
-              user === 0 ? (
-                <>
-                  <b>Всего:</b> {data?.length} кейсов
-                </>
-              ) : (
-                <>
-                  <b>Всего:</b> {data?.length} пользователей
-                </>
-              )
-            }
-          </span>
+          <div>
+            <span style={{ paddingRight: "10px" }}>
+              <b>Всего:</b>{" "}
+              {user === 0
+                ? `${data?.length} кейсов`
+                : `${data?.length} пользователей`}
+            </span>
+          </div>
         </div>
       )}
       <br />

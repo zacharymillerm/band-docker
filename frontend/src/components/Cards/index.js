@@ -36,12 +36,10 @@ const PendingCard = ({ item }) => {
       <Image src={item.img} alt="pendingImage" />
       <div className="pendingCardContent">
         <div>
-          <h3 className="cardBigTitle" style={{ paddingTop: "4px" }}>
-            {item.title}
-          </h3>
-          <h3 className="cardDescription" style={{ maxWidth: "355px" }}>
+          <h3 className="cardBigTitle">{item.title}</h3>
+          <p className="cardDescription">
             {item.description}
-          </h3>
+          </p>
         </div>
         <BlackButton title="ПОДРОБНЕЕ" onClick={() => handleLink(item?.url)} />
       </div>
@@ -100,7 +98,6 @@ const TextBlogCard = ({ item }) => (
 
 const VideoBlogCard = ({ item }) => {
   const [open, setOpen] = useState(false);
-  console.log("VideoBlogCard", item);
 
   const handleOpen = () => {
     setOpen(true);

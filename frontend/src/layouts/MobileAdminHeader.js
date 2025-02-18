@@ -1,8 +1,8 @@
 import  Link  from "next/link";
 
-const MobileAdminHeader = ({ item, isHambuger, setIsHambuger }) => {
+const MobileAdminHeader = ({ item, isHamburger, setisHamburger }) => {
   const hambugerClick = () => {
-    isHambuger ? setIsHambuger(false) : setIsHambuger(true);
+    isHamburger ? setisHamburger(false) : setisHamburger(true);
   };
 
   return (

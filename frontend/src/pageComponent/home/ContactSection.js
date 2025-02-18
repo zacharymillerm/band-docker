@@ -222,7 +222,7 @@ const ContactSection = ({ title }) => {
 
   return (
     <div id="contactSection" className="sectionWrapper section2">
-      <ContactHeader title={'Рассчитать такое же событие'} />
+      <ContactHeader title={title} />
       <ContactMiddle
         sendData={sendData}
         handleChange={handleChange}

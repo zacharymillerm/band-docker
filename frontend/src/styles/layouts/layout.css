@@ -15,8 +15,14 @@
 }
 
 .topHeader {
-  padding: clamp(10px, 3vw, 56px) 0 clamp(10px, 3vw, 21px) 0;
+  padding: 48px 0 28px 0;
   transition: padding 0.8s ease;
+}
+
+@media (max-width: 640px) {
+  .topHeader {
+    padding: 28px 0;
+  }
 }
 
 .searchIcon {
@@ -148,7 +154,7 @@
 .footerTop {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 }
 
 .smallFooterLogo {
@@ -168,6 +174,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 20px;
 }
 
 .footerTopLink {
@@ -182,12 +189,13 @@
 
 .footerMiddle {
   display: flex;
-  align-items: center;
+  align-items: end;
   margin-top: 27px;
 }
 
 .footerMiddleLeft {
   width: 43%;
+  padding-bottom: 10px;
 }
 
 .footerMiddleRight {
@@ -198,7 +206,7 @@
 .middleOne {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   margin-right: 59px;
 }
 
@@ -225,7 +233,14 @@
   letter-spacing: -0.01em;
 }
 
-.footerContact {
+.footerBottom {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.footerBottomAddress {
   font-family: var(--font-mulish);
   font-weight: 500;
   font-size: 18px;
@@ -234,7 +249,7 @@
   letter-spacing: -0.01em;
 }
 
-.footerBottomLink .footerSpacialLink {
+.footerBottomLink {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -246,7 +261,36 @@
   line-height: 15.06px;
   letter-spacing: -0.03em;
   text-decoration: none;
+  gap: 10px;
   cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .footerButtons {
+    width: 100%;
+  }
+
+  .footerBottom {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 30px;
+  }
+
+  .footerBottomContact {
+    order: 1;
+  }
+
+  .footerBottomAddress {
+    order: 0;
+  }
+
+  .footerBottomLink {
+    order: 2;
+    text-align: left;
+    /* flex-flow: column-reverse; */
+  }
 }
 
 .box1 {
@@ -260,6 +304,13 @@
 .adminHeaderLink {
   margin-left: 30px;
 }
+
+@media (max-width: 576px) {
+  .adminPageText {
+    display: none;
+  }
+}
+
 
 .adminHeaderLink a,
 .adminHeaderLink span {
@@ -301,9 +352,11 @@
   cursor: pointer;
 }
 
-.adminHeaderHanbuger {
-  margin-top: 10px;
-  float: right;
+.adminHeaderHamburger {
+  /* margin-top: 10px; */
+  /* float: right; */
+  /* bottom: 20px; */
+  /* right: 20px; */
 }
 
 @media (max-width: 1206px) {
@@ -442,10 +495,6 @@
 
   .footerContactWrap {
     display: none;
-  }
-
-  .footerBottomLink .footerSpacialLink {
-    text-align: left;
   }
 
   .box1 {

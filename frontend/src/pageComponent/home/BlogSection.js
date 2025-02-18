@@ -14,8 +14,7 @@ const BlogSection = () => {
     <div id="blogSection" className="sectionWrapper">
       <div className="sectionHeader">
         <h2
-          className="sectionTitle"
-          style={{ padding: "0 clamp(0px, 4vw, 64px)" }}
+          className="sectionTitle blogPadding"
         >
           Блог #ЗАВОД ШОУ
         </h2>

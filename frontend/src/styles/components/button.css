@@ -136,12 +136,12 @@
 }
 
 .bigTransButton {
-  padding: clamp(6.2px, 1.5vw, 18px) clamp(14px, 5vw, 30.5px);
+  padding: clamp(6.2px, 1.5vw, 18px) clamp(14px, 5vw, 34px);
   border-radius: 10px;
 
-  font-size: clamp(14px, 2vw, 35px);
+  font-size: clamp(14px, 3vw, 35px);
   line-height: clamp(17.57px, 2vw, 44px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.01em;
 }
 
 .bigTransButtonPadding {

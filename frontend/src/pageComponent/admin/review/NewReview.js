@@ -88,8 +88,6 @@ const NewReview = () => {
       }
     });
 
-    console.log('newFormData:', newFormData);
-
     const request = Data
       ? updateReview(Data?.id, newFormData)
       : insertReview(newFormData);

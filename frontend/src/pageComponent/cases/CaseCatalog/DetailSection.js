@@ -301,8 +301,6 @@ const DetailSection = ({
 
   const reduceUsers = () => setSliceData(result.slice(0, 8));
 
-  // console.log(fieldData)
-
   return (
     <section className="flexWrapBetween">
       <form className="selectBoxSquare">
