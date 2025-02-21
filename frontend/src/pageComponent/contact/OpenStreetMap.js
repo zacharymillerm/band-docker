@@ -6,17 +6,14 @@ import { OpenStreetMapProvider } from "leaflet-geosearch";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-// import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
-
-const markerIcon = "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png";
-
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
+const customIcon = L.icon({
+  iconUrl: "/leaflet-icons/marker-icon.png",
+  iconRetinaUrl: "/leaflet-icons/marker-icon-2x.png",
+  shadowUrl: "/leaflet-icons/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
 });
 
 const MapComponent = () => {
@@ -47,7 +44,7 @@ const MapComponent = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={coordinates}>
+          <Marker position={coordinates} icon={customIcon}>
             <Popup>Москва, г. Реутов, ул. Победы, 20</Popup>
           </Marker>
         </MapContainer>

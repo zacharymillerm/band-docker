@@ -65,7 +65,7 @@
 
 .heroLinkWrap {
   margin-top: 65px;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .heroLinkLeft {

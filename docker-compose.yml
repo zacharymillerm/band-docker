@@ -69,3 +69,5 @@ volumes:
   mysql_data:
   laravel_storage:
   laravel_public:
+  next_node:
+  next_build:
