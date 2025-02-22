@@ -26,6 +26,7 @@ services:
     depends_on:
       - mysql
     volumes:
+      - ./backend:/var/www
       - laravel_storage:/var/www/storage
       - laravel_public:/var/www/public
     environment:
