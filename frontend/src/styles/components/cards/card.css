@@ -19,7 +19,7 @@
 
 .publicationCard {
   padding: 16px;
-  max-width: 371px;
+  max-width: 370px;
   background-color: var(--secondaryWhiteColor);
   border-radius: 5px;
   flex: 1 1 auto;

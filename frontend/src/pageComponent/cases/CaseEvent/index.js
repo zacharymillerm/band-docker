@@ -72,7 +72,7 @@ const CaseEvent = () => {
         )} */}
       </div>
       <div className="container">
-        <ContactSection title={caseOne?.eventTitle} />
+        <ContactSection title="Рассчитать такое же событие" />
       </div>
     </div>
   );

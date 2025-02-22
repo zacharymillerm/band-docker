@@ -36,7 +36,7 @@ const PortfolioSection = () => {
           />
         </div>
       </div>
-      <div className="flexWrapAround" style={{ gap: "40px" }}>
+      <div className="flexWrapAround" style={{ gap: "20px" }}>
         {publicationCardInfo.map((item, index) => (
           <PublicationCard key={index} item={item} />
         ))}
