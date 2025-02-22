@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:8.0
@@ -40,16 +38,18 @@ services:
       - "8000:8000"
     networks:
       - app_network
-    entrypoint: ["/var/www/entrypoint.sh"]
+    command: >
+      bash -c "composer install && php artisan migrate --force && php artisan config:cache && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=8000"
 
   next:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
     container_name: next_app
     restart: unless-stopped
     depends_on:
       - laravel
+    volumes:
+      - ./frontend:/app
     ports:
       - "3000:3000"
     environment:
@@ -57,6 +57,8 @@ services:
       NEXT_PUBLIC_API_URL: http://89.111.141.133:8000
     networks:
       - app_network
+    command: >
+      bash -c "npm ci && npm run build && npm run start"
 
 networks:
   app_network:

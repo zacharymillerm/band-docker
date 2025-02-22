@@ -1,6 +1,6 @@
-# Stage 1: Build
-FROM php:8.2-fpm AS builder
+FROM php:8.2-fpm
 
+# Set working directory
 WORKDIR /var/www
 
 # Install dependencies
@@ -13,27 +13,31 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     curl \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
+
+# Set PHP upload limits
+RUN echo "upload_max_filesize = 2048M" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "post_max_size = 2048M" >> /usr/local/etc/php/conf.d/uploads.ini
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install PHP dependencies
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+ENV NVM_DIR /root/.nvm
+ENV NODE_VERSION 16
+RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash && \
+    . "$NVM_DIR/nvm.sh" && \
+    nvm install $NODE_VERSION && \
+    nvm use $NODE_VERSION && \
+    nvm alias default $NODE_VERSION && \
+    npm install -g yarn
 
-# Stage 2: Production Image
-FROM php:8.2-fpm
-
-WORKDIR /var/www
-
-# Copy necessary files from builder stage
-COPY --from=builder /var/www/vendor /var/www/vendor
-COPY --from=builder /usr/bin/composer /usr/bin/composer
-
-# Copy application files
+# Copy Laravel project files
 COPY . .
+
+# Install dependencies
+RUN composer validate
+RUN composer clear-cache
+RUN composer install --ignore-platform-reqs --no-dev --optimize-autoloader
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
@@ -41,8 +45,5 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 # Expose port
 EXPOSE 9000
 
-# Copy entrypoint script
-COPY entrypoint.sh /var/www/entrypoint.sh
-RUN chmod +x /var/www/entrypoint.sh
-
-CMD ["/var/www/entrypoint.sh"]
+# Start PHP-FPM server
+CMD ["php-fpm"]
