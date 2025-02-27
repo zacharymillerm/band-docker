@@ -105,6 +105,9 @@ const NewSite = () => {
         "Конференц-залы",
         "Загородные площадки",
         "Концертные залы",
+        "Дом культуры",
+        "Клуб",
+        "Лофт" 
       ],
     },
     // {
@@ -136,11 +139,13 @@ const NewSite = () => {
       name: "blog_type",
       placeholder: "ВХОДНАЯ ТИП",
       option: [
-
         "Частное",
-        "Тур",
         "Корпоративное",
-        "Городское",
+        "Конференция",
+        "Государственное",
+        "Спортивное",
+        "Концерт",
+        "Тур",
       ],
     },
     {
@@ -205,8 +210,8 @@ const NewSite = () => {
         formData[key].forEach((item) =>
           newFormData.append("site_type[]", item)
         );
-      // } else if (key === "blog_type") {
-      //   newFormData.append("blog_type[]", formData[key]);
+        // } else if (key === "blog_type") {
+        //   newFormData.append("blog_type[]", formData[key]);
       } else if (key === "siteTags") {
         newFormData.append("siteTags", JSON.stringify(siteTags));
       } else if (key === "video") {

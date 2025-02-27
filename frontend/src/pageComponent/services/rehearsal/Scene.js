@@ -5,12 +5,12 @@ import { WhiteBox } from "@/components/WhiteBox/WhiteBox";
 import { stage } from "@/assets";
 
 const sceneInfo = [
-  { img: questionImg, title: "Задник из 2-х частей", scene: "15,5×9,5 м" },
-  { img: questionImg, title: "Авансцена", scene: "3,5 м" },
+  { title: "Задник из 2-х частей", scene: "15,5×9,5 м" },
+  { title: "Авансцена", scene: "3,5 м" },
   { title: "Высота до дер. колосников", scene: "20,6 м" },
   { title: "Арх. зеркало сцены", scene: "15,5×8 м" },
   { title: "Кулисы черные 2 плана", scene: "2,8×9,5 м" },
-  { img: questionImg, title: "Фронтальная линейка", scene: "-" },
+  { title: "Фронтальная линейка", scene: "-" },
   {
     title: "Макс. раб. глубина сцена",
     scene: "26,5 м",
@@ -53,7 +53,8 @@ const Scene = () => {
           <Image
             src={stage}
             alt="threeRotation"
-            className="absoluteCenter threeRotationImg" style={{
+            className="absoluteCenter threeRotationImg"
+            style={{
               width: "100%",
               height: "100%",
               objectFit: "cover",

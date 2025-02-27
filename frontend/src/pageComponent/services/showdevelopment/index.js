@@ -14,6 +14,7 @@ import ShowConcept from "./showconcept";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import { useEffect, useState } from "react";
 import { getShowParticipant } from "@/api/participantAPI";
+import { Subtitles } from "@mui/icons-material";
 
 const ShowDevelopmentPage = () => {
   useScrollToTop();
@@ -34,7 +35,7 @@ const ShowDevelopmentPage = () => {
         <BigVideoBox
           item={{
             titleCenter: true,
-            videoTitle: "Пример 3D-визуализации для шоу",
+            videoTitle: " ",
             src: showdevelopment,
           }}
         />

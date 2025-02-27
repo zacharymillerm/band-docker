@@ -14,12 +14,36 @@ class BlogController extends Controller
     public function getBlogs()
     {
         try {
-            $blogs = Blog::with('site')->orderBy('queue', 'desc')->get();
-            foreach ($blogs as $blog) {
-                $blog->equipment_names = $blog->equipment->pluck('name')->toArray();
-                $blog->site_name = $blog->site ? $blog->site->name : null;
-            }
-            return response()->json($blogs, 200);
+            $blogs = Blog::orderBy('queue', 'desc')->get();
+
+            return response()->json($blogs->map(function ($blog) {
+                return [
+                    'id' => $blog->id,
+                    'name' => $blog->name,
+                    'blog_type' => $blog->blog_type,
+                    'startDate' => $blog->startDate,
+                    'endDate' => $blog->endDate,
+                    'guests' => $blog->guests,
+                    'venue' => $blog->venue,
+                    'video' => $blog->video,
+                    'images' => $blog->images,
+                    'tags' => $blog->tags,
+                    'checkbox' => $blog->checkbox,
+                    'cities' => $blog->cities,
+                    'features' => $blog->features,
+                    'queue' => $blog->queue,
+                    'solution' => $blog->solution,
+                    'title' => $blog->title,
+                    'description' => $blog->description,
+                    'keyword' => $blog->keyword,
+                    'three_id' => $blog->three_id,
+                    'site_id' => $blog->site_id,
+                    'checked' => $blog->checked,
+                    'eventTitle' => $blog->eventTitle,
+                    'site_type' => $blog->getSiteTypeAttribute(),
+                    'equipment_type' => $blog->getEquipmentTypeAttribute()
+                ];
+            }), 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error fetching data'], 400);
         }

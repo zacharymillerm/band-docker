@@ -52,10 +52,12 @@ const CaseEvent = () => {
           <CaseEventTag title="ЧТО ДЕЛАЛИ" tags={caseOne?.site_type} />
           <CaseEventTag title="ГОРОДА" tags={caseOne?.cities} />
         </section>
-        {caseOne?.type !== "тур" && caseOne?.site && <CristalRoom site={caseOne?.site} />}
+        {caseOne?.type !== "Тур" && caseOne?.site && (
+          <CristalRoom site={caseOne?.site} />
+        )}
         <div className="smallSectionWrapper">
           {caseOne?.three && <EventSection dData={caseOne?.three} />}
-          {caseOne?.type === "тур" && (
+          {caseOne?.type === "Тур" && (
             <ChichaSmallBox
               title="Отрепетировано на реп-базе Завод Шоу"
               text="Современный зрительный зал на 1372 места с полным электрическим оснащением. 
@@ -65,7 +67,7 @@ const CaseEvent = () => {
           )}
         </div>
         <CaseCards solution={caseOne?.solution} feature={caseOne?.features} />
-        {/* {caseOne?.type === "тур" && (
+        {/* {caseOne?.type === "Тур" && (
           <EquipmentUsed
             equipment={caseOne?.equipment.length > 0 && caseOne.equipment[0]}
           />

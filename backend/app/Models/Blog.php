@@ -53,14 +53,18 @@ class Blog extends Model
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function equipment()
-    {
-        return $this->belongsToMany(Equipment::class, 'blog_equipment');
-    }
-
-
     public function three()
     {
         return $this->belongsTo(Three::class, 'three_id');
+    }
+
+    public function getSiteTypeAttribute()
+    {
+        return $this->site ? $this->site->site_type : [];
+    }
+
+    public function getEquipmentTypeAttribute()
+    {
+        return $this->site ? $this->site->equipment_type : [];
     }
 }

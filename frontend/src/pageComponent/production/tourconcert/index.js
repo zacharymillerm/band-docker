@@ -18,7 +18,7 @@ const TourConcertPage = () => {
   useScrollToTop();
   const [caseData, setCaseData] = useState({});
   useEffect(() => {
-    getCasesByType("тур").then((data) => {
+    getCasesByType("Тур").then((data) => {
       data && setCaseData(data[0]);
     });
   }, []);
@@ -47,7 +47,7 @@ const TourConcertPage = () => {
       <SwiperSection displayType="Продакшн" />
       <div className="container">
         <PendingSection />
-        <ContactSection title="Рассчитать концерт/тур" />
+        <ContactSection title="Рассчитать концерт/Тур" />
         <BlogSection />
       </div>
     </section>

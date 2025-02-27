@@ -21,7 +21,7 @@ const EventPage = () => {
 
   const [caseData, setCaseData] = useState({});
   useEffect(() => {
-    getCasesByType("частное").then((data) => {
+    getCasesByType("Частное").then((data) => {
       data && setCaseData(data[0]);
     });
   }, []);

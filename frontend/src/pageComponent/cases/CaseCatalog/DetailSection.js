@@ -62,6 +62,9 @@ const typeSite = [
   "Конференц-залы",
   "Загородные площадки",
   "Концертные залы",
+  "Дом культуры",
+  "Клуб",
+  "Лофт" 
 ];
 
 const DetailSection = ({
@@ -72,6 +75,8 @@ const DetailSection = ({
   checkText,
   activeType,
 }) => {
+
+  console.log(data)
   type === "case" ? "КЕЙСЫ" : type === "platform" ? "ПЛОЩАДКИ" : "ОБОРУДОВАНИЕ";
   const [result, setResult] = useState([]);
   const [sliceData, setSliceData] = useState([]);
@@ -81,7 +86,7 @@ const DetailSection = ({
   const [searchData, setSearchData] = useState({
     blog_type: "",
     blog_types: "",
-    site_name: "",
+    site_type: "",
     startDate: "",
     venue: "",
     cities: "",
@@ -159,11 +164,11 @@ const DetailSection = ({
               new Set(data?.map((item) => item.equipment_names).flat())
             ).filter((name) => name !== null && name !== undefined),
           };
-        case "site_name":
+        case "site_type":
           return {
             ...field,
             option: Array.from(
-              new Set(data?.map((item) => item.site_name).flat())
+              new Set(data?.map((item) => item.site_type).flat())
             ).filter((name) => name !== null && name !== undefined),
           };
         case "blog_types":
@@ -258,9 +263,10 @@ const DetailSection = ({
                 .toLowerCase()
                 .includes(searchData.blog_types.toLowerCase())
             ))) &&
-        (!searchData.site_name || item.site_name === searchData.site_name) &&
+        (!searchData.site_type ||
+          item.site_type.includes(searchData.site_type)) &&
         (!searchData.default_site ||
-          item.site_name === searchData.default_site) &&
+          item.site_type.includes(searchData.default_site)) &&
         (!searchData.type ||
           item.type.toUpperCase().includes(searchData.type.toUpperCase())) &&
         (!searchData.startDate ||
