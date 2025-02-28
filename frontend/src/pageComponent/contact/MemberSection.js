@@ -89,7 +89,7 @@ const MemberSection = () => (
                 className="alignCenter"
                 style={{
                   display: item.content[1] ? "block" : "none",
-                  marginTop: "15px",
+                  // marginTop: "15px",
                 }}
               >
                 <Image src={item.content[1]?.icon} alt="icon" />
