@@ -26,9 +26,10 @@ import {
 import { AdminPermissionCard } from "../Cards";
 import Image from "next/image";
 
-const BigVideoBox = ({ item }) => {
+const BigVideoBox = ({ item, isButtonVisible = true }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const navigate = useRouter();
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -38,7 +39,7 @@ const BigVideoBox = ({ item }) => {
     }
     setIsPlaying(!isPlaying);
   };
-  const navigate = useRouter();
+
   const handleLink = (url) => {
     navigate.push(url);
   };
@@ -55,11 +56,14 @@ const BigVideoBox = ({ item }) => {
             <h2 className="sectionTitle">{item.title}</h2>
           </div>
         )}
-        {item.subTitle && <p className="bigVideoTitle__subTitle">{item.subTitle}</p>}
+        {item.subTitle && (
+          <p className="bigVideoTitle__subTitle">{item.subTitle}</p>
+        )}
       </div>
       <div className="bigVideoSquare">
         <video
-          controls
+          /** Remove the controls prop so the browser's default controls 
+              don't interfere with your custom onClick handler. */
           ref={videoRef}
           className="video"
           width="600"
@@ -82,12 +86,12 @@ const BigVideoBox = ({ item }) => {
       <div className="spaceBetween bigVideoSquareFooter">
         <p className="x24Font_2">{item.videoTitle}</p>
         <p className="x18Font_2">{item.videoDescription}</p>
-        <ArrowDefaultButton
-          title="ПОДРОБНЕЕ"
-          onClick={() => {
-            handleLink("/cases");
-          }}
-        />
+        {isButtonVisible && (
+          <ArrowDefaultButton
+            title="ПОДРОБНЕЕ"
+            onClick={() => handleLink("/cases")}
+          />
+        )}
       </div>
     </div>
   );

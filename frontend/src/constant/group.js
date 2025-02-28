@@ -1452,8 +1452,8 @@ const teamOfficeInfo = [
     description: "МЕНЕДЖЕРЫ ПРОЕКТОВ, АРЕНДА ОБОРУДОВАНИЯ",
     content: [
       { icon: miniPhone, value: "доб. 203" },
-      { icon: miniMail, value: "m004@zavodshow.ru" },
-      { icon: miniTelegram, value: "@petroff" },
+      { icon: miniTelegram, value: "@afonnikova_irina_zavodshow" },
+      { icon: miniTelegram, value: "@sedov_alexey_zavodshow" },
     ],
   },
   {
@@ -1461,7 +1461,7 @@ const teamOfficeInfo = [
     content: [
       { icon: miniPhone, value: "доб. 300" },
       { icon: miniMail, value: "fin@zavodshow.ru" },
-      { icon: miniTelegram, value: "@ivanoff" },
+      { icon: miniTelegram, value: "@Timofeev_ZS" },
     ],
   },
   {
@@ -1469,7 +1469,7 @@ const teamOfficeInfo = [
     content: [
       { icon: miniPhone, value: "доб. 800" },
       { icon: miniMail, value: "delivery@zavodshow.ru" },
-      { icon: miniTelegram, value: "@klimoff" },
+      { icon: miniTelegram, value: "@afonnikova_irina_zavodshow" },
     ],
   },
   {
@@ -1485,15 +1485,23 @@ const teamOfficeInfo = [
     content: [
       { icon: miniPhone, value: "доб. 400" },
       { icon: miniMail, value: "cargo@zavodshow.ru" },
-      { icon: miniTelegram, value: "@voronoff" },
+      { icon: miniTelegram, value: "@office_zavodshow" },
     ],
   },
   {
     flag: 1,
-    description: ["АРЕНДА ЗАЛА", "ИНФОРМАЦИОННОЕ ОБЕСПЕЧЕНИЕ, РЕКЛАМА"],
+    description: ["АРЕНДА ЗАЛА"],
     content: [
-      { icon: miniPhone, value: "89060522880" },
-      { icon: miniPhone, value: "89060517879" },
+      { icon: miniPhone, value: "+7 (906)-052-28-80" },
+      { icon: miniTelegram, value: "@office_zavodshow" },
+    ],
+  },
+  {
+    flag: 1,
+    description: ["ИНФОРМАЦИОННОЕ ОБЕСПЕЧЕНИЕ, РЕКЛАМА"],
+    content: [
+      { icon: miniPhone, value: "+7 (906)-051-78-79" },
+      { icon: miniTelegram, value: "@pr_zavodshow" },
     ],
   },
 ];
@@ -1666,7 +1674,7 @@ const CatalogInfo = {
           "Концертные залы",
           "Дом культуры",
           "Клуб",
-          "Лофт" 
+          "Лофт",
         ],
       },
       {

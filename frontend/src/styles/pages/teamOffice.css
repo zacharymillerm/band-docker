@@ -23,7 +23,7 @@
 .memberData {
   display: grid;
   gap: 5px;
-  padding-left: 50px;
+  padding-left: 20px;
   box-sizing: border-box;
 }
 

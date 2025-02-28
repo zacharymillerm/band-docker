@@ -24,6 +24,7 @@ const VisualizationPage = () => {
               "Смоделируем несколько вариантов оформления сцены и выберем наиболее подходящий под требования",
             src: visualization3d,
           }}
+            isButtonVisible = {false}
         />
         <WorkProcess
           title1="3D-визуализация"

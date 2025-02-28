@@ -1,6 +1,6 @@
 "use client";
 
-import { showdevelopment, Svideo06 } from "@/assets";
+import { visualization3d, Svideo06 } from "@/assets";
 import { BigVideoBox } from "@/components/Boxes";
 import HeroSample from "@/components/HeroSample/HeroSample";
 import { heroSectionInfo, workProcessInfo2 } from "@/constant/group";
@@ -35,9 +35,11 @@ const ShowDevelopmentPage = () => {
         <BigVideoBox
           item={{
             titleCenter: true,
+            title: "Пример 3D-визуализации для шоу",
             videoTitle: " ",
-            src: showdevelopment,
+            src: visualization3d,
           }}
+          isButtonVisible={false}
         />
         <WorkProcess
           arrowWidth="115px"

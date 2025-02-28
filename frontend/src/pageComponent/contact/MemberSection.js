@@ -5,7 +5,7 @@ import { teamOfficeInfo } from "../../constant/group";
 const MemberSection = () => (
   <div className="contactAddress meberSquare">
     {teamOfficeInfo.map((item, index) => (
-      <div key={index} className="flexWrap itemCenter memberInfo">
+      <div key={index} className="flexWrap itemCenter spaceBetween memberInfo">
         <div className="smallHalfWidth memberType">
           {item.title ? (
             <div>
@@ -35,15 +35,15 @@ const MemberSection = () => (
         <div className="smallHalfWidth memberData">
           {item.title ? (
             <>
-              <p className="mobileShow"> &nbsp; &nbsp;</p>
+              <p className="mobileShow"> &nbsp;</p>
               <div className="alignCenter">
-                <Image src={miniPhone} alt="icon" />
-                &nbsp; &nbsp;
+                <Image src={item.content[0]?.icon} alt="icon" />
+                &nbsp;
                 <span className="x15_1">{item.content[0]?.value}</span>
               </div>
               <div className="alignCenter">
-                <Image src={miniClock} alt="icon" />
-                &nbsp; &nbsp;
+                <Image src={item.content[1]?.icon} alt="icon" />
+                &nbsp;
                 <span className="x15_1">
                   Пн-Сб: &nbsp;{item.content[1]?.value}
                 </span>
@@ -54,16 +54,16 @@ const MemberSection = () => (
               {item.flag !== 1 && (
                 <>
                   <div className="alignCenter">
-                    <Image src={miniPhone} alt="icon" />
-                    &nbsp; &nbsp;
+                    <Image src={item.content[0]?.icon} alt="icon" />
+                    &nbsp;
                     <span className="x14_3">{item.content[0]?.value}</span>
                   </div>
                   <div
                     className="alignCenter"
                     style={{ display: item.content[1] ? "block" : "none" }}
                   >
-                    <Image src={miniMail} alt="icon" />
-                    &nbsp; &nbsp;
+                    <Image src={item.content[1]?.icon} alt="icon" />
+                    &nbsp;
                     <span className="x14_3">{item.content[1]?.value}</span>
                   </div>
                 </>
@@ -72,8 +72,8 @@ const MemberSection = () => (
                 className="alignCenter"
                 style={{ display: item.content[2] ? "block" : "none" }}
               >
-                <Image src={miniTelegram} alt="icon" />
-                &nbsp; &nbsp;
+                <Image src={item.content[2]?.icon} alt="icon" />
+                &nbsp;
                 <span className="x14_3">{item.content[2]?.value}</span>
               </div>
             </>
@@ -81,8 +81,8 @@ const MemberSection = () => (
           {item.flag === 1 && (
             <div>
               <div className="alignCenter">
-                <Image src={miniPhone} alt="icon" />
-                &nbsp; &nbsp;
+                <Image src={item.content[0]?.icon} alt="icon" />
+                &nbsp;
                 <span className="x14_3">{item.content[0]?.value}</span>
               </div>
               <div
@@ -92,8 +92,8 @@ const MemberSection = () => (
                   marginTop: "15px",
                 }}
               >
-                <Image src={miniPhone} alt="icon" />
-                &nbsp; &nbsp;
+                <Image src={item.content[1]?.icon} alt="icon" />
+                &nbsp;
                 <span className="x14_3">{item.content[1]?.value}</span>
               </div>
             </div>
