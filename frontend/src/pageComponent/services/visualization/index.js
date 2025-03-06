@@ -30,8 +30,9 @@ const VisualizationPage = () => {
           title1="3D-визуализация"
           title2="Наш процесс работы"
           data={workProcessInfo}
-          fileName="document.pdf"
-          url={samplePDF}
+          fileName="Работа с 3D-визуализацией.docx"
+          url="/documents/Работа с 3D-визуализацией.docx"
+          sizeStr="DOC 35 Kб"
         />
         <ExampleCase />
       </div>

@@ -1,7 +1,4 @@
 //icons
-
-import samplePDF from "./document/tour.pdf";
-
 import logo from "./logo.svg";
 import footerLogo from "./icon/footerLogo.png";
 import adminLoginLogo from "./adminLoginLogo.svg";
@@ -150,6 +147,7 @@ const kabukiVideo = "/video/kabukiVideo.mp4";
 const eventVideo = "/video/eventVideo.mp4";
 const productionEvent = "/video/productionEvent.mp4";
 const ProductionConcert = "/video/ProductionConcert.mp4";
+const realStageSetup = "/video/realStageSetup.mp4"
 
 //Policy
 import plusIcon from "./icon/plus.svg";
@@ -240,10 +238,9 @@ import stage from "./background/stage.png";
 const visualization3d = "/video/visualization3d.mp4";
 
 export {
-  samplePDF,
-
   //icons
   visualization3d,
+  realStageSetup,
   logo,
   footerLogo,
   adminLoginLogo,
@@ -456,7 +453,6 @@ export {
 
   //gallery
   uploadImage,
-
   auditorium,
   stage,
 };

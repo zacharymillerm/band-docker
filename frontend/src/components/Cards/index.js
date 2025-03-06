@@ -15,6 +15,7 @@ import {
   whitePlay,
   starIcon1,
   positionIcon,
+  
   // redTrash,
   // greyPencil,
   // greyArrow,
@@ -37,9 +38,7 @@ const PendingCard = ({ item }) => {
       <div className="pendingCardContent">
         <div>
           <h3 className="cardBigTitle">{item.title}</h3>
-          <p className="cardDescription">
-            {item.description}
-          </p>
+          <p className="cardDescription">{item.description}</p>
         </div>
         <BlackButton title="ПОДРОБНЕЕ" onClick={() => handleLink(item?.url)} />
       </div>
@@ -209,7 +208,7 @@ const RentalCostCard = ({ cost }) => (
   </div>
 );
 
-const RentalCostDocCard = ({ item, docFile }) => {
+const RentalCostDocCard = ({ item }) => {
   return (
     <div className="rentalCostDocCard">
       <Image src={greyDocument} alt="greyDocument" />
@@ -217,7 +216,13 @@ const RentalCostDocCard = ({ item, docFile }) => {
       <div
         className="alignCenter"
         style={{ cursor: "pointer" }}
-        onClick={() => docFile && handleDownload(docFile, `${item.text}.zip`)}
+        onClick={() => {
+          if (item.download !== "") {
+            handleDownload(item.url, item.download);
+          } else {
+            window.open("https://t.me/zavodshowbase", "_blank");
+          }
+        }}
       >
         <Image src={greyDownload} alt="greyDownload" />
         <p className="docuSizeText">&nbsp;&nbsp;{item.size}</p>

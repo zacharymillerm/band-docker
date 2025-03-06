@@ -5,7 +5,7 @@ import { PDFText } from "@/components/Titles";
 import { handleDownload } from "@/constant/defaultLink";
 // import "@/styles/pages/services/visualization.css";
 
-const WorkProcess = ({ arrowWidth, title1, title2, data, url, fileName }) => {
+const WorkProcess = ({ arrowWidth, title1, title2, data, url, fileName, sizeStr="PDF 2.1 Мб"}) => {
   const WorkProcessBtn = () => (
     <div className="alignCenter downloadBtnWrap" style={{ marginTop: "12px" }}>
       <DownloadButton
@@ -13,7 +13,7 @@ const WorkProcess = ({ arrowWidth, title1, title2, data, url, fileName }) => {
         title="Скачать пример документации"
         onClick={() => handleDownload(url, fileName)}
       />
-      <PDFText />
+      <PDFText text={sizeStr}/>
     </div>
   );
 

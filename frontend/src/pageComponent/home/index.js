@@ -20,6 +20,7 @@ const Home = () => {
         <HeroSection />
         <GallerySection title="Кейсы из портфолио" galleryType="Главная" />
       </div>
+      
       <AboutSection />
       <div className="container">
         <PendingSection />

@@ -16,7 +16,7 @@ const TitleGoBack = ({ title }) => (
   </p>
 );
 
-const PDFText = () => <p className="pdfText">PDF 2.1 Мб</p>;
+const PDFText = ({ text = "PDF 2.1 Мб" }) => <p className="pdfText">{text}</p>;
 
 const Title16 = ({ title }) => (
   <p className="x16" style={{ marginBottom: "12px" }}>

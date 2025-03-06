@@ -67,7 +67,10 @@ const HeroSection = () => {
             <h1 className="pageTitle pageTitle-1" style={{ textAlign: "left" }}>
               Технический продакшн
             </h1>
-            <h1 className="pageTitle pageTitle-2" style={{ textAlign: "right" }}>
+            <h1
+              className="pageTitle pageTitle-2"
+              style={{ textAlign: "right" }}
+            >
               частных мероприятий
             </h1>
             <div className="itemCenter">
@@ -89,9 +92,14 @@ const HeroSection = () => {
               </Link>
               <BlackButton
                 title="зАПОЛНИТЬ БРИФ"
-                onClick={() =>
-                  handleNavigation("https://forms.yandex.com/admin/")
-                }
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = "/documents/Бриф по проекту.xlsx"; // Path to your file
+                  link.download = "Бриф по проекту"; // Name of the downloaded file
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
               />
             </div>
           </div>

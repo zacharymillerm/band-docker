@@ -32,7 +32,10 @@ const TourConcertPage = () => {
           title1="Тур"
           title2="Наш процесс работы"
           data={workProcessInfo4}
-          fileName="tour"
+          fileName="Этапы работы над туром.docx"
+          url="/documents/Этапы работы над туром.docx"
+          sizeStr="DOC 1.8 Мб"
+
         />
         <BigVideoBox
           item={{

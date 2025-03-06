@@ -64,7 +64,7 @@ const ShowCreation = () => {
                 <DarkIconButton
                   icon={item.buttonIcon}
                   title={item.buttonTitle}
-                  onClick={() => handleDownload("", "")}
+                  onClick={() => handleDownload(item.url, item.download)}
                 />
                 <p
                   className="pdfText"

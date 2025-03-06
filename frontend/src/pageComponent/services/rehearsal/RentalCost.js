@@ -4,9 +4,24 @@ import { ChichaBox } from "@/components/ChichaBox";
 import { getRental } from "@/api/rentalAPI";
 
 const rentalDocumentInfo = [
-  { text: "3D-макеты сцены", size: "ZIP 50 Мб" },
-  { text: "Тех. райдер площадки", size: "ZIP 3.54 Мб" },
-  { text: "Архив фото", size: "ZIP 2.1 Мб" },
+  {
+    text: "3D-макеты сцены",
+    url: "/documents/Репетиционная база.pdf",
+    download: "Репетиционная база.pdf",
+    size: "PDF 0.9 Мб",
+  },
+  {
+    text: "Тех. райдер площадки",
+    url: "/documents/Оборудование ДК МИР.docx",
+    download: "Оборудование ДК МИР.docx",
+    size: "DOC 1.9 Мб",
+  },
+  {
+    text: "Архив фото",
+    url: "https://t.me/zavodshowbase",
+    download: "",
+    size: "t.me/zavodshowbase",
+  },
 ];
 
 const RentalCost = () => {
@@ -21,11 +36,7 @@ const RentalCost = () => {
   const RentalDocument = ({ documentFile }) => (
     <div className="flexWrapBetween">
       {rentalDocumentInfo.map((item, index) => (
-        <RentalCostDocCard
-          docFile={documentFile && documentFile[index] && documentFile[index]}
-          key={index}
-          item={item}
-        />
+        <RentalCostDocCard key={index} item={item} />
       ))}
     </div>
   );

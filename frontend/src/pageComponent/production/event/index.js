@@ -38,7 +38,9 @@ const EventPage = () => {
           title1="Cобытие"
           title2="Наш процесс работы"
           data={workProcessInfo3}
-          fileName="event"
+          url="/documents/Чек-лист Ивент.xls"
+          fileName="Чек-лист Ивент.xls"
+          sizeStr="XLS 1.8 Мб"
         />
       </div>
       <SwiperSection displayType="Продакшн" />

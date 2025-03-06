@@ -1,6 +1,6 @@
 "use client";
 
-import { visualization3d, Svideo06 } from "@/assets";
+import { visualization3d, realStageSetup } from "@/assets";
 import { BigVideoBox } from "@/components/Boxes";
 import HeroSample from "@/components/HeroSample/HeroSample";
 import { heroSectionInfo, workProcessInfo2 } from "@/constant/group";
@@ -45,13 +45,15 @@ const ShowDevelopmentPage = () => {
           arrowWidth="115px"
           title1="Подготовка, реализация и проведение шоу"
           data={workProcessInfo2}
-          fileName="development"
+          url="/documents/Этапы работы над туром.docx"
+          fileName="Этапы работы над туро - 2.docx"
+          sizeStr="DOC 1.9Мб"
         />
         <BigVideoBox
           item={{
             titleCenter: true,
             title: "Пример реальной установки сцены",
-            src: Svideo06,
+            src: realStageSetup,
             videoTitle: "Тайм-лапс возведение сцены",
             videoDescription: "Перед концертом Кипелова",
           }}

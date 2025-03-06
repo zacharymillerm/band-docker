@@ -1051,7 +1051,9 @@ const creationInfo = [
     ],
     buttonIcon: creationIcon,
     buttonTitle: "Как делают 3D-визуализацию",
-    sizeText: "PDF 2.1 Мб",
+    url: "/documents/Работа с 3D-визуализацией.docx",
+    download: "Работа с 3D-визуализацией.docx",
+    sizeText: "DOC 35 Кб",
     bgColor: "#E5E5E5",
   },
   {
@@ -1077,7 +1079,9 @@ const creationInfo = [
     ],
     buttonIcon: smallDownload,
     buttonTitle: "Скачать пример документации",
-    sizeText: "PDF 2.1 Мб",
+    url: "/documents/Этапы работы над туром.docx",
+    download: "Этапы работы над туром.docx",
+    sizeText: "DOC 1.9 Мб",
     bgColor: "#CECDCD",
   },
 ];
