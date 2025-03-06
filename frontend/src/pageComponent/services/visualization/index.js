@@ -7,7 +7,7 @@ import { heroSectionInfo, workProcessInfo } from "@/constant/group";
 import ContactSection from "@/pageComponent/home/ContactSection";
 import BlogSection from "@/pageComponent/home/BlogSection";
 import { BigVideoBox } from "@/components/Boxes";
-import { samplePDF, stage3d, visualization3d } from "@/assets";
+import { visualization3d } from "@/assets";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import HeroSample from "@/components/HeroSample/HeroSample";
 
