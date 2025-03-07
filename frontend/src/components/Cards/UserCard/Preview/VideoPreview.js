@@ -18,18 +18,42 @@ const VideoPreview = (props) => {
           <span className="closeIcon">&times;</span>
         </button>
       </div>
-      <div>
-        <video
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <div
           style={{
             width: "100%",
-            height: "83%",
-            marginTop: "20px",
-            borderRadius: "5px",
+            maxWidth: "100%", // Ensures it doesn't overflow the parent
+            aspectRatio: "16/9", // Enforces 16:9 ratio
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
+            position: "relative",
           }}
-          controls
         >
-          <source src={avatar} type="video/mp4" />
-        </video>
+          <video
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              width: "100%", // Ensures it scales within the parent
+              height: "100%", // Adjusts to maintain aspect ratio
+              objectFit: "contain", // Maintains original video ratio inside the box
+              borderRadius: "5px",
+            }}
+            controls
+          >
+            <source src={avatar} type="video/mp4" />
+          </video>
+        </div>
         <div className="videoPreviewDescription">{description}</div>
       </div>
     </div>
