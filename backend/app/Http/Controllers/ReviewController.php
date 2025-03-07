@@ -10,21 +10,29 @@ class ReviewController extends Controller
     public function createReview(Request $request)
     {
         $data = $request->all();
-        $data['file'] = $request->file('files') 
-            ? uploadVideoOrImage($request->file('files'), 'review') 
+    
+        // Handle file upload (videos or images)
+        $data['file'] = $request->hasFile('files')
+            ? uploadVideoOrImage($request->file('files'), 'review')
             : '';
-        $data['avatar'] = $request->file('avatar') 
-        ? url('storage/' . $request->file('avatar')->store('uploads/review', 'public')) 
-        : '';
-
+    
+        // Handle avatar upload properly
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('uploads/review', 'public');
+            $data['avatar'] = url('storage/' . $avatarPath);
+        } else {
+            $data['avatar'] = '';
+        }
+    
         try {
-            $newReview = Review::create($data); 
-            return response()->json(['message' => 'Successfully saved!'], 200);
+            $newReview = Review::create($data);
+            return response()->json(['message' => 'Successfully saved!', 'review' => $newReview], 200);
         } catch (\Exception $e) {
             \Log::error('Error saving data: ' . $e->getMessage());
             return response()->json(['error' => 'Error saving data'], 400);
         }
     }
+    
 
     public function updateReview(Request $request, $id)
     {
@@ -32,20 +40,35 @@ class ReviewController extends Controller
             $existingReview = Review::findOrFail($id);
 
             $data = $request->all();
-            $data['file'] = $request->file('files')
-                ? uploadVideoOrImage($request->file('files'), 'review') 
-                : $existingReview->file;
 
-                if ($request->file('files')) {
-                    \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $existingReview->file));
+            // Handle avatar update properly
+            if ($request->hasFile('avatar')) {
+                // Delete old avatar if exists
+                if ($existingReview->avatar) {
+                    \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $existingReview->avatar));
                 }
+
+                // Store new avatar
+                $avatarPath = $request->file('avatar')->store('uploads/review', 'public');
+                $data['avatar'] = url('storage/' . $avatarPath);
+            } else {
+                $data['avatar'] = $existingReview->avatar;
+            }
+
+            // Handle file update
+            if ($request->hasFile('files')) {
+                \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $existingReview->file));
+                $data['file'] = uploadVideoOrImage($request->file('files'), 'review');
+            } else {
+                $data['file'] = $existingReview->file;
+            }
+
             $existingReview->update($data);
 
             return response()->json([
                 'message' => 'Review successfully updated!',
                 'updatedReview' => $existingReview,
             ], 200);
-
         } catch (\Exception $e) {
             \Log::error('Error updating review: ' . $e->getMessage());
             return response()->json(['error' => 'Error updating review data'], 400);
@@ -90,12 +113,12 @@ class ReviewController extends Controller
     {
         try {
             $review = Review::findOrFail($reviewId);
-            if($review->file){
+            if ($review->file) {
                 \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $review->file));
             }
             $review->delete();
 
-            $reviews = Review::all(); 
+            $reviews = Review::all();
             return response()->json($reviews, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error deleting review'], 400);
@@ -122,10 +145,10 @@ class ReviewController extends Controller
             $temp2 = $secondBlog->id;
             $secondBlog->id = $temp1;
             $secondBlog->save();
-            $firstBlog->id=$temp2;
+            $firstBlog->id = $temp2;
             $firstBlog->save();
-            
-            
+
+
             return response()->json([
                 'message' => 'Blog IDs swapped successfully',
                 'blogs' => [
@@ -133,7 +156,6 @@ class ReviewController extends Controller
                     'second' => $secondBlog->fresh()
                 ]
             ]);
-
         } catch (\Exception $error) {
             \Log::error('Error swapping blog IDs: ' . $error->getMessage());
             return response()->json([
