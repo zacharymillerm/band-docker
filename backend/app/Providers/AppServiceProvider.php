@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        ini_set('upload_max_filesize', env('UPLOAD_MAX_FILESIZE', '2048M'));
+        ini_set('post_max_size', env('POST_MAX_SIZE', '2048M'));
     }
 }
