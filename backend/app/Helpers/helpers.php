@@ -6,18 +6,39 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('convertVideoFormat')) {
-    function convertVideoFormat($inputPath, $outputPath, $width = 1280, $height = 720, $bitrate = '2M')
+    function convertVideoFormat($inputPath, $outputPath, $maxWidth = 1280, $maxHeight = 720, $bitrate = '2M')
     {
         try {
             Log::info('Converting video from ' . $inputPath . ' to ' . $outputPath);
 
-            // Convert video using FFmpeg
+            // Get video dimensions
+            $ffprobe = FFMpeg\FFProbe::create();
+            $dimensions = $ffprobe->streams(storage_path('app/public/' . $inputPath))
+                ->videos()
+                ->first()
+                ->getDimensions();
+
+            $originalWidth = $dimensions->getWidth();
+            $originalHeight = $dimensions->getHeight();
+
+            // Calculate new dimensions while maintaining aspect ratio
+            $aspectRatio = $originalWidth / $originalHeight;
+
+            if ($originalWidth > $originalHeight) { // Landscape video
+                $newWidth = $maxWidth;
+                $newHeight = intval($maxWidth / $aspectRatio);
+            } else { // Portrait video
+                $newHeight = $maxHeight;
+                $newWidth = intval($maxHeight * $aspectRatio);
+            }
+
+            // Convert video using FFmpeg while keeping aspect ratio
             FFMpeg::fromDisk('public')
                 ->open($inputPath)
                 ->export()
                 ->toDisk('public')
                 ->inFormat(new X264)
-                ->resize($width, $height)
+                ->resize($newWidth, $newHeight) // Resize while keeping aspect ratio
                 ->save($outputPath);
 
             Log::info('Converted video from ' . $inputPath . ' to ' . $outputPath);

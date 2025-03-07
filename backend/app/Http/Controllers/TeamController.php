@@ -9,34 +9,31 @@ class TeamController extends Controller
 {
     public function createOrUpdateTeam(Request $request)
     {
-        $data = $request->all();
-
-        if ($request->hasFile('avatar')) {
-            $filePath = "";
-            $filePath = url('storage/' . $request->file('avatar')->store('uploads/teams', 'public'));
-            $data['avatar'] = $filePath;
-        } else {
-            $data['avatar'] = [];
-        }
-
-        if ($request->hasFile('teamPic')) {
-            $filePath = "";
-            $filePath = url('storage/' . $request->file('teamPic')->store('uploads/teams', 'public'));
-            $data['teamPic'] = $filePath;
-        } else {
-            $data['teamPic'] = [];
-        }
-
         try {
-            $existingTeam = Team::first(); // Get the first team entry
+            $data = $request->all();
 
-            if ($existingTeam) {
-                $existingTeam->update($data);
-                return response()->json(['message' => 'Team data successfully updated!'], 200);
-            } else {
-                $newTeam = Team::create($data);
-                return response()->json(['message' => 'Team data successfully saved!'], 200);
+            // Handle avatar upload
+            if ($request->hasFile('avatar')) {
+                $data['avatar'] = url('storage/' . $request->file('avatar')->store('uploads/teams', 'public'));
             }
+
+            // Handle teamPic upload
+            if ($request->hasFile('teamPic')) {
+                $data['teamPic'] = url('storage/' . $request->file('teamPic')->store('uploads/teams', 'public'));
+            }
+
+            // Check if the request has an ID (update scenario)
+            if ($request->has('id')) {
+                $team = Team::find($request->id);
+                if ($team) {
+                    $team->update($data);
+                    return response()->json(['message' => 'Team data successfully updated!', 'team' => $team], 200);
+                }
+            }
+
+            // Create new team entry if no ID is provided or team not found
+            $newTeam = Team::create($data);
+            return response()->json(['message' => 'Team data successfully saved!', 'team' => $newTeam], 201);
         } catch (\Exception $e) {
             \Log::error('Error saving or updating team data: ' . $e->getMessage());
             return response()->json(['error' => 'Error saving or updating team data'], 400);
@@ -52,7 +49,7 @@ class TeamController extends Controller
             return response()->json(['error' => 'Error fetching data'], 400);
         }
     }
-    
+
     public function swapTeamQueue(Request $request)
     {
         try {
@@ -72,10 +69,10 @@ class TeamController extends Controller
             $temp2 = $secondBlog->id;
             $secondBlog->id = $temp1;
             $secondBlog->save();
-            $firstBlog->id=$temp2;
+            $firstBlog->id = $temp2;
             $firstBlog->save();
-            
-            
+
+
             return response()->json([
                 'message' => 'Blog IDs swapped successfully',
                 'blogs' => [
@@ -83,7 +80,6 @@ class TeamController extends Controller
                     'second' => $secondBlog->fresh()
                 ]
             ]);
-
         } catch (\Exception $error) {
             \Log::error('Error swapping blog IDs: ' . $error->getMessage());
             return response()->json([
@@ -92,6 +88,4 @@ class TeamController extends Controller
             ], 500);
         }
     }
-
-
 }
