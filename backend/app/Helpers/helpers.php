@@ -12,7 +12,8 @@ if (!function_exists('convertVideoFormat')) {
             Log::info('Converting video from ' . $inputPath . ' to ' . $outputPath);
 
             // Get video dimensions
-            $ffprobe = FFMpeg\FFProbe::create();
+            $ffprobe = FFMpeg::ffprobe();
+
             $dimensions = $ffprobe->streams(storage_path('app/public/' . $inputPath))
                 ->videos()
                 ->first()
