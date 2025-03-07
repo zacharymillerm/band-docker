@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChichaBox } from "@/components/ChichaBox";
-import { slidingVideo } from "@/assets";
+import { slidingCurtain } from "@/assets";
 import { BlackButton } from "@/components/Buttons";
 import { ChichaBoxRightCard, ChichaBoxVideoCard } from "@/components/Cards";
 import { DetailDataInput } from "@/components/Inputs";
@@ -52,7 +52,7 @@ const SlidingCurtain = () => {
         className="flexWrapBetween"
         style={{ marginTop: "30px", gap: "clamp(30px, 3.5vw, 40px)" }}
       >
-        <ChichaBoxVideoCard video={slidingVideo} onClick={handleOpen} />
+        <ChichaBoxVideoCard video={slidingCurtain} onClick={handleOpen} />
         <ChichaBoxRightCard
           content={
             <>
@@ -68,7 +68,7 @@ const SlidingCurtain = () => {
           }
         />
       </div>
-      <VideoPreview open={open} setOpen={setOpen} avatar={slidingVideo} />
+      <VideoPreview open={open} setOpen={setOpen} avatar={slidingCurtain} />
     </section>
   );
 

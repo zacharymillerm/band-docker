@@ -142,7 +142,6 @@ const Svideo9 = "/video/Svideo9.mp4";
 const Svideo10 = "/video/Svideo10.mp4";
 const showdevelopment = "/video/showdevelopment.mp4";
 const coveringVideo = "/video/coveringVideo.mp4";
-const slidingVideo = "/video/slidingVideo.mp4";
 const kabukiVideo = "/video/kabukiVideo.mp4";
 const eventVideo = "/video/eventVideo.mp4";
 const productionEvent = "/video/productionEvent.mp4";
@@ -229,6 +228,7 @@ import darkDownloadIcon from "./icon/darkDownloanIcon.svg";
 //heroVideo
 const heroVideo1 = "/video/heroVideo1.mp4";
 const heroVideo2 = "/video/heroVideo2.mp4";
+const slidingCurtain = "/video/slidingCurtain.mp4";
 
 //gallery
 import uploadImage from "../assets/icon/uploadImage.png";
@@ -239,6 +239,7 @@ const visualization3d = "/video/visualization3d.mp4";
 
 export {
   //icons
+  slidingCurtain,
   visualization3d,
   realStageSetup,
   logo,
@@ -384,7 +385,6 @@ export {
   Svideo8,
   showdevelopment,
   coveringVideo,
-  slidingVideo,
   kabukiVideo,
   eventVideo,
   Svideo9,

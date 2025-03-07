@@ -36,7 +36,7 @@ const ShowDevelopmentPage = () => {
           item={{
             titleCenter: true,
             title: "Пример 3D-визуализации для шоу",
-            videoTitle: " ",
+            videoTitle: "",
             src: visualization3d,
           }}
           isButtonVisible={false}
