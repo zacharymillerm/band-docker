@@ -19,17 +19,27 @@ export const login = async (formdata) => {
 export const logout = async () => {
   try {
     const token = sessionStorage.getItem("token");
-    const response = await apiClient.post("/admin/logout", null, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.status !== 200)
-      throw new Error(`Unexpected response status: ${response.status}`);
 
-    sessionStorage.removeItem("token");
-    return response.data;
+    // Ensure token exists before proceeding
+    if (!token) {
+      console.warn("No token found, redirecting to login.");
+      window.location.href = "/admin/login";
+      return;
+    }
+
+    // Make logout API request
+    const response = await apiClient.post("/admin/logout", null, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`Unexpected response status: ${response.status}`);
+    }
   } catch (err) {
-    handleError("Error logging out user:", err);
+    console.error("Error logging out user:", err);
+  } finally {
+    // Cleanup & Redirect
+    sessionStorage.removeItem("token");
+    window.location.href = "/admin/login";
   }
 };
