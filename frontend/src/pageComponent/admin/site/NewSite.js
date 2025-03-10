@@ -86,20 +86,20 @@ const inputinfo = [
     type: "text",
     placeholder: "АДРЕС",
   },
-  {
-    title: "ТИП КЕЙСА",
-    name: "blog_type",
-    placeholder: "ВХОДНАЯ ТИП",
-    option: [
-      "Частное",
-      "Корпоративное",
-      "Конференция",
-      "Государственное",
-      "Спортивное",
-      "Концерт",
-      "Тур",
-    ],
-  },
+  // {
+  //   title: "ТИП КЕЙСА",
+  //   name: "blog_type",
+  //   placeholder: "ВХОДНАЯ ТИП",
+  //   option: [
+  //     "Частное",
+  //     "Корпоративное",
+  //     "Конференция",
+  //     "Государственное",
+  //     "Спортивное",
+  //     "Концерт",
+  //     "Тур",
+  //   ],
+  // },
   {
     title: "Meta Title",
     name: "title",
@@ -295,7 +295,7 @@ const NewSite = () => {
           ))}
 
           <Box sx={{ width: "100%" }}>
-            <Typography variant="x16" style={{ textTransform: "uppercase" }}>
+            <Typography variant="x16" style={{ textTransform: "uppercase", marginBottom: "12px" }}>
               Разделы, где будет отображена площадка
             </Typography>
             <Autocomplete
