@@ -145,6 +145,9 @@ const BigCaseVideoBox = ({ src }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const isVideo =
+    src?.endsWith(".mp4") || src?.endsWith(".webm") || src?.endsWith(".ogg");
+
   const handlePlayPause = () => {
     if (isPlaying) {
       videoRef.current.pause();
@@ -157,22 +160,32 @@ const BigCaseVideoBox = ({ src }) => {
   return (
     <div style={{ paddingLeft: 0, paddingRight: 0 }}>
       <div className="bigVideoSquare">
-        <video
-          controls
-          ref={videoRef}
-          className="video"
-          onClick={handlePlayPause}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          src={src}
-        />
-        {!isPlaying && (
-          <Image
-            src={whitePlay}
-            alt="whitePlay"
-            className="bigPlayIcon"
-            onClick={handlePlayPause}
+        {!isVideo ? (
+          <img
+            src={src}
+            style={{ width: "100%", aspectRatio: "16 / 9", objectFit: "cover" }}
+            alt="image"
           />
+        ) : (
+          <>
+            <video
+              controls
+              ref={videoRef}
+              className="video"
+              onClick={handlePlayPause}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              src={src}
+            />
+            {!isPlaying && (
+              <Image
+                src={whitePlay}
+                alt="whitePlay"
+                className="bigPlayIcon"
+                onClick={handlePlayPause}
+              />
+            )}
+          </>
         )}
       </div>
     </div>

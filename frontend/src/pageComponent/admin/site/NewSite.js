@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Autocomplete,
   Box,
@@ -183,14 +183,15 @@ const NewSite = () => {
   };
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
     setLoading(true);
     let newFormData = new FormData();
     Object.keys(formData).forEach((key) => {
-      if (Array.isArray(formData[key])) {
+      if (key === "siteTags") {
+        newFormData.append(key, JSON.stringify(formData[key]));
+      } else if (Array.isArray(formData[key])) {
         formData[key].forEach((item) => newFormData.append(`${key}[]`, item));
-      } else if (key === "video") {
-        newFormData.append(key, formData[key]);
       } else {
         newFormData.append(key, formData[key]);
       }
@@ -213,34 +214,46 @@ const NewSite = () => {
       });
   };
 
-  const [siteTags, setSiteTags] = useState([]);
+  const [siteTags, setSiteTags] = useState(formData.siteTags || []);
+
+  // Synchronize siteTags with formData.siteTags
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      siteTags: siteTags,
+    }));
+  }, [siteTags]);
+
   const [editingTag, setEditingTag] = useState({ name: "", capacity: "" });
   const [editingIndex, setEditingIndex] = useState(null);
 
   const handleAddTag = () => {
     if (editingIndex !== null) {
-      const updatedTags = siteTags.map((tag, index) =>
+      const updatedTags = formData.siteTags.map((tag, index) =>
         index === editingIndex ? editingTag : tag
       );
-      setSiteTags(updatedTags);
+      setFormData({ ...formData, siteTags: updatedTags });
       setEditingIndex(null);
     } else {
       if (editingTag.name && editingTag.capacity) {
-        setSiteTags([...siteTags, editingTag]);
+        setFormData({
+          ...formData,
+          siteTags: [...formData.siteTags, editingTag],
+        });
       }
     }
     setEditingTag({ name: "", capacity: "" });
   };
 
   const handleEditTag = (index) => {
-    const tagToEdit = siteTags[index];
+    const tagToEdit = formData.siteTags[index];
     setEditingTag(tagToEdit);
     setEditingIndex(index);
   };
 
   const handleDeleteTag = (index) => {
-    const updatedTags = siteTags.filter((_, i) => i !== index);
-    setSiteTags(updatedTags);
+    const updatedTags = formData.siteTags.filter((_, i) => i !== index);
+    setFormData({ ...formData, siteTags: updatedTags });
   };
 
   return (
@@ -295,7 +308,10 @@ const NewSite = () => {
           ))}
 
           <Box sx={{ width: "100%" }}>
-            <Typography variant="x16" style={{ textTransform: "uppercase", marginBottom: "12px" }}>
+            <Typography
+              variant="x16"
+              style={{ textTransform: "uppercase", marginBottom: "12px" }}
+            >
               Разделы, где будет отображена площадка
             </Typography>
             <Autocomplete
@@ -407,9 +423,9 @@ const NewSite = () => {
             >
               {editingIndex !== null ? "Сохранить изменения" : "Добавить тег"}
             </button>
-            {siteTags.length > 0 ? (
+            {formData.siteTags.length > 0 ? (
               <ul className="x14" style={{ marginBottom: "12px" }}>
-                {siteTags.map((tag, index) => (
+                {formData.siteTags.map((tag, index) => (
                   <li
                     key={index}
                     style={{
@@ -454,7 +470,6 @@ const NewSite = () => {
               <p className="x16">Теги сайта пока не добавлены.</p>
             )}
           </div>
-
           {loading && <LoadingProgress />}
         </>
       }

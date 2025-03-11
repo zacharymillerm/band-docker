@@ -20,6 +20,7 @@ const SitePage = () => {
       data && setSiteOne(data);
     });
   }, [siteId]);
+  
   return (
     <section className="wrapper">
       <div className="container">

@@ -43,7 +43,7 @@ const CaseCatalogCardBadge = ({ type, label }) => {
 const UserCardNumber = ({ value, text }) => (
   <div style={{ display: "flex", gap: "14px" }}>
     <div className="userCardNumber spaceAround">
-      {/* <Image src={darkSmallUser} alt="smallUser" /> */}
+      <Image src={darkSmallUser} alt="smallUser" />
       <p>{value}</p>
     </div>
     <p className="userCardText">{text}</p>

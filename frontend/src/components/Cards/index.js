@@ -15,7 +15,7 @@ import {
   whitePlay,
   starIcon1,
   positionIcon,
-  
+
   // redTrash,
   // greyPencil,
   // greyArrow,
@@ -257,21 +257,31 @@ const ChichaBoxRightCard = ({ content, width, height }) => (
 );
 
 const CaseCatalogCard = ({ type, item, onClick }) => {
+  const isVideo =
+    item?.video?.endsWith(".mp4") ||
+    item?.video?.endsWith(".webm") ||
+    item?.video?.endsWith(".ogg");
+
   // console.log(item)
   return (
     <div className="caseCatalogCard">
       {type !== "equipment" ? (
-        <video
-          src={
-            type === "case"
-              ? `${item?.video}`
-              : type === "platform"
-              ? `${item?.video}`
-              : ""
-          }
-          style={{ width: "100%", height: "175px", objectFit: "cover" }}
-          onClick={onClick}
-        />
+        <>
+          {isVideo ? (
+            <video
+              src={item?.video}
+              style={{ width: "100%", height: "175px", objectFit: "cover" }}
+              onClick={onClick}
+            />
+          ) : (
+            <img
+              src={item?.video}
+              style={{ width: "100%", height: "175px", objectFit: "cover" }}
+              onClick={onClick}
+              alt=""
+            />
+          )}
+        </>
       ) : (
         <div
           className="itemCenter"

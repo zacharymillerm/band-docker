@@ -20,7 +20,7 @@ const UserBtnList = ({ siteTags }) => {
           </div>
         ))
       ) : (
-        <p className="x14_2 chichaShow">Нет доступных тегов сайта.</p> // Fallback message or component
+        <p className="x14_2" style={{color: "white"}}>Нет доступных тегов сайта.</p> // Fallback message or component
       )}
     </section>
   );

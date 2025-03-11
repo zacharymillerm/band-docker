@@ -30,7 +30,10 @@ const TopSiteEventSection = ({ siteOne }) => {
               <div className="spaceBetween">
                 <div
                   className="x24Font_5"
-                  style={{ color: "var(--secondaryWhiteColor)" }}
+                  style={{
+                    color: "var(--secondaryWhiteColor)",
+                    marginRight: "24px",
+                  }}
                 >
                   <Image
                     style={{ marginRight: "clamp(6px, 2vw, 12px)" }}
