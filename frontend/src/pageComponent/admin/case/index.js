@@ -26,8 +26,101 @@ import { TabButton } from "@/components/Buttons";
 import { darkAdd } from "@/assets";
 import { Input, SelectBox, TextArea } from "@/components/Inputs";
 import LoadingProgress from "@/components/Loading/Loading";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+
+const inputInfo = [
+  {
+    title: "Название",
+    name: "name",
+    type: "text",
+    placeholder: "Введите название",
+  },
+  {
+    title: "Тип кейса",
+    name: "blog_type",
+    type: "text",
+    placeholder: "Частное",
+    option: [
+      "Частное",
+      "Корпоративное",
+      "Конференция",
+      "Государственное",
+      "Спортивное",
+      "Концерт",
+      "Тур",
+    ],
+  },
+  {
+    title: "Место проведения",
+    name: "venue",
+    type: "text",
+    placeholder: "Введите данные места проведения",
+  },
+  {
+    title: "Количество гостей",
+    name: "guests",
+    type: "text",
+    placeholder: "Введите количество гостей",
+  },
+  {
+    title: "Описание(особенности)",
+    name: "features",
+    type: "text",
+    placeholder: "Введите описание",
+  },
+  {
+    title: "Meta Title",
+    name: "title",
+    type: "text",
+    placeholder:
+      "Заголовок страницы для поисковых систем. Рекомендуется не более 250 символов.",
+  },
+  {
+    title: "Meta Keyword",
+    name: "keyword",
+    type: "text",
+    placeholder: "Список ключевых слов через запятую для поисковых систем.",
+  },
+  {
+    title: "Meta Description",
+    name: "description",
+    type: "text",
+    placeholder:
+      "Краткое описание страницы для поисковых систем. Рекомендуется не более 250 символов.",
+  },
+  {
+    title: "Город",
+    name: "city",
+    type: "text",
+    placeholder: "Введите город",
+  },
+  {
+    title: "Хедлайнер",
+    name: "eventTitle",
+    type: "text",
+    placeholder: "Введите хедлайнера",
+  },
+];
+
+const typeSite = [
+  "Все типы площадок",
+  "Рестораны",
+  "Конференц-залы",
+  "Загородные площадки",
+  "Концертные залы",
+  "Дом культуры",
+  "Клуб",
+  "Лофт",
+];
+
+const optionsWhatWeDid = [
+  "Свет",
+  "Звук",
+  "Видео",
+  "Одежда сцены",
+  "3д-визуализация",
+  "Репетиционная база",
+];
 
 const NewCase = () => {
   const [site, setSite] = useState([]);
@@ -37,103 +130,127 @@ const NewCase = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const navigate = useRouter();
 
-  const handleCloseAlert = () => {
-    setAlertOpen(false);
-  };
-
-  useEffect(() => {
-    getSite().then((data) => {
-      setSite(data);
-    });
-    getThrees().then((data) => {
-      setDdata(data);
-    });
-  }, []);
-
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const searchParams = useSearchParams();
 
-  // Helper function to parse the initial data from URL parameters
-  // Helper function to parse the initial data from URL parameters
-  const getInitialData = () => {
-    if (!searchParams.size) return null;
-
-    let data = {};
-    searchParams.forEach((value, key) => {
-      try {
-        // Check if the key is 'cities' and handle it specifically
-        if (key === "cities") {
-          // Parse cities as JSON if it's a valid JSON string
-          data[key] = JSON.parse(value);
-        } else {
-          // Try to parse JSON strings (for arrays)
-          data[key] = JSON.parse(value);
-        }
-      } catch {
-        // If not JSON, use the value as is
-        data[key] = value;
-      }
-    });
-    return data;
-  };
-
-  // Get the data from URL parameters instead of localStorage
-  const Data = getInitialData();
-
   const [formData, setFormData] = useState({
-    cities: Data?.cities || [],
-    name: Data?.name || "",
-    blog_type: Data?.blog_type[0] || "Частное",
-    startDate: Data?.startDate || "",
-    endDate: Data?.endDate || "",
-    guests: Data?.guests || "",
-    venue: Data?.venue || "",
-    d_id: Data?.d_id || "",
-    features: Data?.features || "",
-    site: Data?.site || "",
-    // equipment: Data?.equipment || [],
-    // equipment_type: Data?.equipment_type || [],
-    video: { name: Data?.video } || {},
-    site_type: Data?.site_type || [],
-    images: Data?.images || [],
-    eventTitle: Data?.eventTitle || "",
-    title: Data?.title || "",
-    keyword: Data?.keyword || "",
-    description: Data?.keyword || "",
+    cities: [],
+    name: "",
+    blog_type: "Частное",
+    startDate: "",
+    endDate: "",
+    guests: "",
+    venue: "",
+    features: "",
+    site_id: "",
+    three_id: "",
+    video: {},
+    site_type: [],
+    images: [],
+    eventTitle: "",
+    title: "",
+    keyword: "",
+    description: "",
   });
 
-  const [cities, setCities] = useState(Data?.cities || []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const [siteData, threeData] = await Promise.all([getSite(), getThrees()]);
+      setSite(siteData);
+      setDdata(threeData);
+    };
+    fetchData();
+  }, []);
 
-  const handleItemAdded = (item) => {
-    setCities([...cities, item]);
+  useEffect(() => {
+    if (searchParams.size) {
+      const initialData = {};
+      searchParams.forEach((value, key) => {
+        try {
+          const parsedValue = JSON.parse(value);
+          if (parsedValue !== null) {
+            initialData[key] = parsedValue;
+          }
+        } catch {
+          if (value !== null) {
+            initialData[key] = value;
+          }
+        }
+      });
+
+      // Parse the startDate and endDate from the search parameters
+      const parseRussianDate = (dateString) => {
+        const months = {
+          января: 0,
+          февраля: 1,
+          марта: 2,
+          апреля: 3,
+          мая: 4,
+          июня: 5,
+          июля: 6,
+          августа: 7,
+          сентября: 8,
+          октября: 9,
+          ноября: 10,
+          декабря: 11,
+        };
+        const [day, month, year] = dateString.split(" ");
+        return new Date(year, months[month.toLowerCase()], day);
+      };
+
+      if (initialData.startDate) {
+        const startDate = parseRussianDate(initialData.startDate);
+        setSelectedDate(startDate);
+      }
+
+      if (initialData.endDate) {
+        const endDate = parseRussianDate(initialData.endDate);
+        setSelectedEndDate(endDate);
+      }
+
+      setFormData((prev) => ({ ...prev, ...initialData }));
+    }
+  }, [searchParams]);
+
+  const handleAddCity = (item) => {
+    setFormData((prev) => ({
+      ...prev,
+      cities: [...prev.cities, item],
+    }));
   };
 
-  const handleItemDeleted = (item) => {
-    setCities(cities.filter((city) => city !== item));
+  const handleDeleteCity = (item) => {
+    setFormData((prev) => ({
+      ...prev,
+      cities: prev.cities.filter((city) => city !== item),
+    }));
   };
 
-  const handleOneCty = (e) => {
-    setCities([e.target.value]);
+  const handleOneCity = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      cities: [e.target.value],
+    }));
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    if (name === "blog_type") {
-      setCities([]);
+    const { name, value, type } = e.target;
+
+    if (type === "radio") {
+      setFormData((prev) => ({ ...prev, [name]: parseInt(value, 10) }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleVideoChange = (e) => {
-    setFormData({ ...formData, video: e.target.files[0] });
-  };
+  const handleVideoChange = (e) =>
+    setFormData((prev) => ({ ...prev, video: e.target.files[0] }));
 
-  const updateFiles = (incomingFiles) => {
-    setFormData({ ...formData, images: incomingFiles });
-  };
+  const updateFiles = (incomingFiles) =>
+    setFormData((prev) => ({ ...prev, images: incomingFiles }));
 
-  const handleChangeDate = (date) => {
+  const handleDateChange = (date, isStartDate) => {
     const formattedDate = date
       .toLocaleDateString("ru-RU", {
         day: "numeric",
@@ -141,163 +258,28 @@ const NewCase = () => {
         year: "numeric",
       })
       .replace(" г.", "");
-    setSelectedDate(date);
-    setFormData({ ...formData, startDate: formattedDate });
+    isStartDate ? setSelectedDate(date) : setSelectedEndDate(date);
+    setFormData((prev) => ({
+      ...prev,
+      [isStartDate ? "startDate" : "endDate"]: formattedDate,
+    }));
   };
 
-  const handleChangeEndDate = (date) => {
-    const formattedDate = date
-      .toLocaleDateString("ru-RU", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-      .replace(" г.", "");
-    setSelectedEndDate(date);
-    setFormData({ ...formData, endDate: formattedDate });
-  };
-
-  const handleSiteChange = (event) => {
-    setFormData({
-      ...formData,
-      site: event.target.value, // Update the site value in formData
-    });
-  };
-
-  const handle3DChange = (event) => {
-    setFormData({
-      ...formData,
-      d_id: event.target.value,
-    });
-  };
-
-  const inputinfo = [
-    {
-      title: "Название",
-      name: "name",
-      type: "text",
-      placeholder: "Введите название",
-    },
-    {
-      title: "Тип кейса",
-      name: "blog_type",
-      type: "text",
-      placeholder: "Частное",
-      option: [
-        "Частное",
-        "Корпоративное",
-        "Конференция",
-        "Государственное",
-        "Спортивное",
-        "Концерт",
-        "Тур",
-      ],
-    },
-    {
-      title: "Место проведения",
-      name: "venue",
-      type: "text",
-      placeholder: "Введите данные места проведения",
-    },
-    {
-      title: "Количество гостей",
-      name: "guests",
-      type: "text",
-      placeholder: "Введите количество гостей",
-    },
-    {
-      title: "Описание(особенности)",
-      name: "features",
-      type: "text",
-      placeholder: "Введите описание",
-    },
-    {
-      title: "Meta Title",
-      name: "title",
-      type: "text",
-      placeholder:
-        "Заголовок страницы для поисковых систем. Рекомендуется не более 250 символов.",
-    },
-    {
-      title: "Meta Keyword",
-      name: "keyword",
-      type: "text",
-      placeholder: "Список ключевых слов через запятую для поисковых систем.",
-    },
-    {
-      title: "Meta Description",
-      name: "description",
-      type: "text",
-      placeholder:
-        "Краткое описание страницы для поисковых систем. Рекомендуется не более 250 символов.",
-    },
-    {
-      title: "Город",
-      name: "city",
-      type: "text",
-      placeholder: "Введите город",
-    },
-    {
-      title: "Хедлайнер",
-      name: "eventTitle",
-      type: "text",
-      placeholder: "Введите хедлайнера",
-    },
-  ];
-
-  const typeSite = [
-    "Все типы площадок",
-    "Рестораны",
-    "Конференц-залы",
-    "Загородные площадки",
-    "Концертные залы",
-    "Дом культуры",
-    "Клуб",
-    "Лофт" 
-  ];
-
-  const optionsWhatWeDid = [
-    "Свет",
-    "Звук",
-    "Видео",
-    "Одежда сцены",
-    "3д-визуализация",
-    "Репетиционная база",
-  ];
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    let newFormData = new FormData();
 
-    // Helper function to handle array fields
-    const appendArray = (key, array) => {
+    const newFormData = new FormData();
+    const appendArray = (key, array) =>
       array.forEach((item) => newFormData.append(key, item));
-    };
 
-    // General formData population
-    Object.keys(formData).forEach((key) => {
-      const value = formData[key];
-
-      if (
-        key === "tags" ||
-        key === "equipment" ||
-        key === "site_type" ||
-        key === "equipment_type"
-      ) {
-        appendArray(`${key}[]`, value);
-      } else if (key === "blog_type") {
-        newFormData.append("blog_type[]", value);
-      } else if (key === "images") {
+    Object.entries(formData).forEach(([key, value]) => {
+      if (Array.isArray(value)) appendArray(`${key}[]`, value);
+      else if (key === "images")
         value.forEach((file) => newFormData.append("images[]", file.file));
-      } else if (key === "checkbox" || key === "cities") {
-        appendArray(`${key}[]`, key === "cities" ? cities : value);
-      } else {
-        newFormData.append(key, value);
-      }
+      else newFormData.append(key, value);
     });
 
-    // **Validation: Ensure all required fields**
     const validations = [
       {
         condition: !newFormData.get("video"),
@@ -308,24 +290,9 @@ const NewCase = () => {
         message: "Пожалуйста, загрузите хотя бы одно изображение.",
       },
       {
-        condition: cities.length === 0,
+        condition: formData.cities.length === 0,
         message: "Пожалуйста, выберите хотя бы один город.",
       },
-      // {
-      //   condition: site.length <= 0,
-      //   message: "Прежде всего, пожалуйста, создайте сайт.",
-      //   // navigateTo: "/admin/site",
-      // },
-      // { condition: !formData.site, message: "Пожалуйста, выберите сайт." },
-      // {
-      //   condition: dData.length <= 0,
-      //   message: "Прежде всего, пожалуйста, создайте сайт.",
-      //   // navigateTo: "/admin/three",
-      // },
-      // {
-      //   condition: !formData.d_id,
-      //   message: "Пожалуйста, выберите 3D-визуализацию.",
-      // },
       {
         condition: formData.title.length > 250 || formData.keyword.length > 250,
         message:
@@ -337,40 +304,35 @@ const NewCase = () => {
       },
     ];
 
-    for (const validation of validations) {
-      if (validation.condition) {
-        setLoading(false);
-        setAlertMessage(validation.message);
+    for (const { condition, message } of validations) {
+      if (condition) {
+        setAlertMessage(message);
         setAlertOpen(true);
-        if (validation.navigateTo) {
-          navigate.push(validation.navigateTo);
-        }
+        setLoading(false);
         return;
       }
     }
 
-    // Handle the request for insertion or update
-    const request = Data
-      ? updateCase(Data?.id, newFormData)
-      : insertCase(newFormData);
-    request
-      .then((data) => {
-        if (data?.error) {
-          if (data.error === 400 && data.message === "Name already exists") {
-            setAlertMessage(
-              "Ошибка: Имя блога уже существует. Пожалуйста, выберите другое имя."
-            );
-            setAlertOpen(true);
-          } else {
-            console.log(data.error);
-          }
-        } else {
-          navigate.push("/admin/eventTable");
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const request = searchParams.size
+        ? updateCase(searchParams.get("id"), newFormData)
+        : insertCase(newFormData);
+      const data = await request;
+      if (data?.error) {
+        setAlertMessage(
+          data.error === 400
+            ? "Ошибка: Имя блога уже существует. Пожалуйста, выберите другое имя."
+            : data.message
+        );
+        setAlertOpen(true);
+      } else {
+        navigate.push("/admin/eventTable");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -385,14 +347,14 @@ const NewCase = () => {
             title="Выбрать видео"
             onChange={handleVideoChange}
           />
-          {formData.video && (
+          {formData.video.name && (
             <Typography> Выбрать видео: {formData.video.name}</Typography>
           )}
 
           <Dropzone
             onChange={updateFiles}
             value={formData.images}
-            localization={"RU-ru"}
+            localization="RU-ru"
             label="Выбрать изображения"
             footer={false}
           >
@@ -411,20 +373,20 @@ const NewCase = () => {
 
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
-              {inputinfo[0].title}
+              {inputInfo[0].title}
             </p>
             <Input
-              value={formData[inputinfo[0].name]}
-              item={inputinfo[0]}
+              value={formData[inputInfo[0].name]}
+              item={inputInfo[0]}
               handleChange={handleChange}
             />
           </div>
 
           <div>
-            <p className="x16">{inputinfo[1].title}</p>
+            <p className="x16">{inputInfo[1].title}</p>
             <SelectBox
-              value={formData[inputinfo[1].name]}
-              item={inputinfo[1]}
+              value={formData[inputInfo[1].name]}
+              item={inputInfo[1]}
               handleSelect={handleChange}
             />
           </div>
@@ -436,17 +398,17 @@ const NewCase = () => {
             {formData.blog_type === "Тур" ? (
               <MultipleValueTextInput
                 className="InputText x14 alignCenter"
-                onItemAdded={handleItemAdded}
-                onItemDeleted={handleItemDeleted}
+                onItemAdded={handleAddCity}
+                onItemDeleted={handleDeleteCity}
                 name="city-input"
                 placeholder="Введите названия городов, разделяя их ЗАПЯТОЙ или нажимая клавишу ENTER."
-                values={cities}
+                values={formData?.cities}
               />
             ) : (
               <Input
-                value={formData[inputinfo[8].name]}
-                item={inputinfo[8]}
-                handleChange={handleOneCty}
+                value={formData[inputInfo[8].name]}
+                item={inputInfo[8]}
+                handleChange={handleOneCity}
               />
             )}
           </div>
@@ -456,38 +418,35 @@ const NewCase = () => {
               {formData.blog_type === "Тур" ? "Хедлайнер" : "Место проведения"}
             </p>
             <Input
-              value={formData[inputinfo[2].name]}
+              value={formData[inputInfo[2].name]}
               item={
                 formData.blog_type === "Тур"
-                  ? { ...inputinfo[2], placeholder: "Введите хедлайнера" }
-                  : inputinfo[2]
+                  ? { ...inputInfo[2], placeholder: "Введите хедлайнера" }
+                  : inputInfo[2]
               }
               handleChange={handleChange}
               required={false}
             />
           </div>
+
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
-              Время проведения :{" "}
+              Время проведения:
             </p>
-            <div className="alignCenter ">
+            <div className="alignCenter">
               <DatePicker
-                name="date"
-                className="datePicker InputText x14 alignCenter"
                 selected={selectedDate}
-                onChange={handleChangeDate}
-                value={formData.startDate}
+                onChange={(date) => handleDateChange(date, true)}
                 dateFormat="yyyy/MM/dd"
+                className="datePicker InputText x14 alignCenter"
                 required
               />
               &nbsp;~&nbsp;
               <DatePicker
-                name="date"
-                className="datePicker InputText x14 alignCenter"
                 selected={selectedEndDate}
-                onChange={handleChangeEndDate}
-                value={formData.endDate}
+                onChange={(date) => handleDateChange(date, false)}
                 dateFormat="yyyy/MM/dd"
+                className="datePicker InputText x14 alignCenter"
                 required
               />
             </div>
@@ -498,14 +457,14 @@ const NewCase = () => {
               {formData.blog_type === "Тур" ? "Общая протяженность" : "Гости"}
             </p>
             <Input
-              value={formData[inputinfo[3].name]}
+              value={formData[inputInfo[3].name]}
               item={
                 formData.blog_type === "Тур"
                   ? {
-                      ...inputinfo[3],
+                      ...inputInfo[3],
                       placeholder: "Введите общую протяженность",
                     }
-                  : inputinfo[3]
+                  : inputInfo[3]
               }
               handleChange={handleChange}
             />
@@ -518,8 +477,8 @@ const NewCase = () => {
                 : "Хедлайнер"}
             </p>
             <Input
-              value={formData[inputinfo[9].name]}
-              item={inputinfo[9]}
+              value={formData[inputInfo[9].name]}
+              item={inputInfo[9]}
               handleChange={handleChange}
               required={false}
             />
@@ -527,13 +486,13 @@ const NewCase = () => {
 
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
-              {inputinfo[4].title}
+              {inputInfo[4].title}
             </p>
             <TextArea
-              name={inputinfo[4].name}
-              value={formData[inputinfo[4].name]}
+              name={inputInfo[4].name}
+              value={formData[inputInfo[4].name]}
               onChange={handleChange}
-              placeholder={inputinfo[4].placeholder}
+              placeholder={inputInfo[4].placeholder}
             />
           </div>
 
@@ -548,9 +507,9 @@ const NewCase = () => {
               getOptionLabel={(option) => option}
               filterSelectedOptions
               value={formData?.site_type}
-              onChange={(event, newValue) => {
-                setFormData({ ...formData, site_type: newValue });
-              }}
+              onChange={(_, newValue) =>
+                setFormData((prev) => ({ ...prev, site_type: newValue }))
+              }
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -564,33 +523,33 @@ const NewCase = () => {
 
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
-              {inputinfo[5].title}
+              {inputInfo[5].title}
             </p>
             <Input
-              value={formData[inputinfo[5].name]}
-              item={inputinfo[5]}
+              value={formData[inputInfo[5].name]}
+              item={inputInfo[5]}
               handleChange={handleChange}
             />
           </div>
 
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
-              {inputinfo[6].title}
+              {inputInfo[6].title}
             </p>
             <Input
-              value={formData[inputinfo[6].name]}
-              item={inputinfo[6]}
+              value={formData[inputInfo[6].name]}
+              item={inputInfo[6]}
               handleChange={handleChange}
             />
           </div>
 
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
-              {inputinfo[7].title}
+              {inputInfo[7].title}
             </p>
             <Input
-              value={formData[inputinfo[7].name]}
-              item={inputinfo[7]}
+              value={formData[inputInfo[7].name]}
+              item={inputInfo[7]}
               handleChange={handleChange}
             />
           </div>
@@ -602,12 +561,11 @@ const NewCase = () => {
               </p>
               <RadioGroup
                 row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-                value={formData.site}
-                onChange={handleSiteChange}
+                value={formData.site_id}
+                onChange={handleChange}
+                name="site_id"
               >
-                {site?.map((item, index) => (
+                {site.map((item, index) => (
                   <FormControlLabel
                     key={index}
                     value={item.id}
@@ -627,7 +585,7 @@ const NewCase = () => {
                           title={<span className="tooltip">{item.name}</span>}
                         >
                           <video
-                            src={`${item.video}`}
+                            src={item.video}
                             alt={item.name}
                             style={{ width: 80, height: 80, marginRight: 8 }}
                             controls
@@ -649,12 +607,11 @@ const NewCase = () => {
               </p>
               <RadioGroup
                 row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-                value={formData.d_id}
-                onChange={handle3DChange}
+                value={formData.three_id}
+                onChange={handleChange}
+                name="three_id"
               >
-                {dData?.map((item, index) => (
+                {dData.map((item, index) => (
                   <FormControlLabel
                     key={index}
                     value={item.id}
@@ -674,7 +631,7 @@ const NewCase = () => {
                           title={<span className="tooltip">{item.title1}</span>}
                         >
                           <video
-                            src={`${item.video}`}
+                            src={item.video}
                             alt={index}
                             style={{ width: 80, height: 80, marginRight: 8 }}
                             controls
@@ -694,11 +651,11 @@ const NewCase = () => {
           <Snackbar
             open={alertOpen}
             autoHideDuration={6000}
-            onClose={handleCloseAlert}
+            onClose={() => setAlertOpen(false)}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
           >
             <Alert
-              onClose={handleCloseAlert}
+              onClose={() => setAlertOpen(false)}
               severity="primary"
               sx={{ width: "100%" }}
             >

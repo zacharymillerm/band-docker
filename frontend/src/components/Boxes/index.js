@@ -172,7 +172,7 @@ const BigCaseVideoBox = ({ src }) => {
               controls
               ref={videoRef}
               className="video"
-              onClick={handlePlayPause}
+              // onClick={handlePlayPause}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               src={src}

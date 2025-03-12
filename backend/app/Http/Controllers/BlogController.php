@@ -86,16 +86,6 @@ class BlogController extends Controller
                 $blog->equipment()->attach($request->input('equipment'));
             }
 
-            // Handle site relationship
-            if ($request->has('site')) {
-                $blog->site_id = $request->input('site');
-            }
-
-            // Handle three_d relationship
-            if ($request->has('d_id')) {
-                $blog->three_id = $request->input('d_id');
-            }
-
             $blog->save();
 
             return response()->json([
@@ -148,13 +138,6 @@ class BlogController extends Controller
         try {
             $blog->update($data);
 
-            if ($request->input('site') && $request->input('site') != $blog->site_id) {
-                $blog->site_id = $request->input('site');
-            }
-
-            if ($request->input('d_id') && $request->input('d_id') != $blog->three_id) {
-                $blog->three_id = $request->input('d_id');
-            }
             $blog->save();
 
             if ($request->input('equipment')) {
