@@ -29,6 +29,7 @@
   height: clamp(176px, 30vw, 227px);
   border-radius: 50%;
   overflow: hidden;
+  object-fit: cover;
 }
 
 .circleVideo video {
