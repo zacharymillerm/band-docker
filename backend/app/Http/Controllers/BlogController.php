@@ -49,6 +49,16 @@ class BlogController extends Controller
         }
     }
 
+    public function getBlogByID($id)
+    {
+        try {
+            $blog = Blog::with(['site', 'three'])->findOrFail($id);
+            return response()->json($blog, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error fetching data'], 400);
+        }
+    }
+
     public function insertBlog(Request $request)
     {
         // Check if blog with same name exists
@@ -280,20 +290,6 @@ class BlogController extends Controller
             ], 400);
         }
     }
-    public function getBlogByID($id)
-    {
-        try {
-            $blog = Blog::with(['site', 'equipment', 'three'])->find($id);
-            if (!$blog) {
-                return response()->json(['error' => 'Blog not found'], 404);
-            }
-
-            return response()->json($blog, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Error fetching data'], 400);
-        }
-    }
-
 
     public function insertSolution(Request $request, $id)
     {
