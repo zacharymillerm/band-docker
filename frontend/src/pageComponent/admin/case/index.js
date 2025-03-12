@@ -247,8 +247,16 @@ const NewCase = () => {
   const handleVideoChange = (e) =>
     setFormData((prev) => ({ ...prev, video: e.target.files[0] }));
 
-  const updateFiles = (incomingFiles) =>
-    setFormData((prev) => ({ ...prev, images: incomingFiles }));
+  const updateFiles = (incomingFiles) => {
+    const updatedFiles = incomingFiles.map((file) => {
+      if (file instanceof File) {
+        return file;
+      }
+      return file.file;
+    });
+
+    setFormData((prev) => ({ ...prev, images: updatedFiles }));
+  };
 
   const handleDateChange = (date, isStartDate) => {
     const formattedDate = date
@@ -274,10 +282,15 @@ const NewCase = () => {
       array.forEach((item) => newFormData.append(key, item));
 
     Object.entries(formData).forEach(([key, value]) => {
-      if (Array.isArray(value)) appendArray(`${key}[]`, value);
-      else if (key === "images")
-        value.forEach((file) => newFormData.append("images[]", file.file));
-      else newFormData.append(key, value);
+      if (Array.isArray(value)) {
+        if (key === "images") {
+          value.forEach((file) => newFormData.append("images[]", file));
+        } else {
+          appendArray(`${key}[]`, value);
+        }
+      } else {
+        newFormData.append(key, value);
+      }
     });
 
     const validations = [
@@ -335,6 +348,8 @@ const NewCase = () => {
     }
   };
 
+  console.log(formData.images);
+
   return (
     <CreatePageWrapper
       title="Введите данные нового кейса события здесь"
@@ -357,16 +372,23 @@ const NewCase = () => {
             localization="RU-ru"
             label="Выбрать изображения"
             footer={false}
+            onClean={() => setFormData((prev) => ({ ...prev, images: [] }))} // Clear images when Dropzone is cleaned
           >
             {formData.images.map((file, index) => (
               <FileMosaic
                 key={index}
                 {...{
                   name: file.name || `${index + 1}.png`,
-                  imageUrl: file.file || file,
+                  imageUrl: file, // Directly use the File object
                 }}
                 preview
                 darkMode
+                onDelete={() => {
+                  const updatedFiles = formData.images.filter(
+                    (_, i) => i !== index
+                  );
+                  setFormData((prev) => ({ ...prev, images: updatedFiles }));
+                }}
               />
             ))}
           </Dropzone>
@@ -381,7 +403,6 @@ const NewCase = () => {
               handleChange={handleChange}
             />
           </div>
-
           <div>
             <p className="x16">{inputInfo[1].title}</p>
             <SelectBox
@@ -390,7 +411,6 @@ const NewCase = () => {
               handleSelect={handleChange}
             />
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               Город проведения
@@ -412,7 +432,6 @@ const NewCase = () => {
               />
             )}
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               {formData.blog_type === "Тур" ? "Хедлайнер" : "Место проведения"}
@@ -428,7 +447,6 @@ const NewCase = () => {
               required={false}
             />
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               Время проведения:
@@ -451,7 +469,6 @@ const NewCase = () => {
               />
             </div>
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               {formData.blog_type === "Тур" ? "Общая протяженность" : "Гости"}
@@ -469,7 +486,6 @@ const NewCase = () => {
               handleChange={handleChange}
             />
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               {formData.blog_type === "Тур"
@@ -483,7 +499,6 @@ const NewCase = () => {
               required={false}
             />
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               {inputInfo[4].title}
@@ -495,7 +510,6 @@ const NewCase = () => {
               placeholder={inputInfo[4].placeholder}
             />
           </div>
-
           <Box sx={{ width: "100%" }}>
             <p className="x16" style={{ marginBottom: "12px" }}>
               Что мы делали
@@ -520,7 +534,6 @@ const NewCase = () => {
               )}
             />
           </Box>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               {inputInfo[5].title}
@@ -531,7 +544,6 @@ const NewCase = () => {
               handleChange={handleChange}
             />
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               {inputInfo[6].title}
@@ -542,7 +554,6 @@ const NewCase = () => {
               handleChange={handleChange}
             />
           </div>
-
           <div>
             <p className="x16" style={{ marginBottom: "12px" }}>
               {inputInfo[7].title}
@@ -553,7 +564,6 @@ const NewCase = () => {
               handleChange={handleChange}
             />
           </div>
-
           <Box>
             <FormControl>
               <p className="x16" style={{ marginBottom: "12px" }}>
@@ -647,7 +657,6 @@ const NewCase = () => {
             </FormControl>
           </Box>
           {loading && <LoadingProgress />}
-
           <Snackbar
             open={alertOpen}
             autoHideDuration={6000}
