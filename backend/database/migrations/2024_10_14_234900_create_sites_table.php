@@ -21,9 +21,9 @@ class CreateSitesTable extends Migration
             $table->text('equipment_type')->nullable();
             $table->text('blog_type')->nullable();
             $table->json('cities')->nullable();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
-            $table->string('keyword')->nullable();
+            $table->text('title')->nullable();
+            $table->text('description')->nullable();
+            $table->text('keyword')->nullable();
             $table->timestamps(); // Created at and updated at
         });
     }

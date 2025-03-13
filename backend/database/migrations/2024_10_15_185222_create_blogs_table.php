@@ -23,12 +23,12 @@ return new class extends Migration
             $table->text('equipment_type')->nullable();
             $table->text('site_type')->nullable();
             $table->json('cities')->nullable();
-            $table->string('features')->nullable();
+            $table->text('features')->nullable();
             $table->integer('queue')->default(0);
             $table->json('solution')->nullable();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
-            $table->string('keyword')->nullable();
+            $table->text('title')->nullable();
+            $table->text('description')->nullable();
+            $table->text('keyword')->nullable();
             $table->foreignId('site_id')->nullable()->constrained('sites')->onDelete('set null');
             $table->foreignId('three_id')->nullable()->constrained('threes')->onDelete('set null');
             $table->boolean('checked')->default(false);
