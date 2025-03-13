@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         $email = 'admin@example.com';
         $email2 = 'kevin@example.com';
-        $email3 = 'kevin@example.com';
+        $email3 = 'nik@example.com';
         // Delete the user if they exist
         User::where('email', $email)->delete();
 
