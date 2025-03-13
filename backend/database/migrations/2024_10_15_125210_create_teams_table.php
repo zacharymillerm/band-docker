@@ -18,8 +18,10 @@ class CreateTeamsTable extends Migration
             $table->string('tag6', 511)->nullable();
             $table->string('tag7', 511)->nullable();
             $table->string('tag8', 511)->nullable();
-            $table->string('competencies', 511)->nullable(); // Use json type for competencies
-            $table->string('links', 511)->nullable();
+            $table->string('competencies')->nullable(); // Use json type for competencies
+            $table->string('links')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('teamPic')->nullable();
             $table->timestamps();
         });
     }

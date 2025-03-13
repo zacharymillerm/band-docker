@@ -15,6 +15,7 @@ class CreateReviewsTable extends Migration
             $table->string('file'); // 'require' is not used in Laravel; use validation instead
             $table->text('content'); // 'require' is not used in Laravel; use validation instead
             $table->string('displayType')->nullable(); // Use json type for displayType
+            $table->string('avatar')->nullable();
             $table->unsignedInteger('queue')->default(0); // Set default value for queue
             $table->timestamps();
         });

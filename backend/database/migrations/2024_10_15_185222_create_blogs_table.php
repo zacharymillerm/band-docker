@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('tags')->nullable();
             $table->string('checkbox')->nullable();
             $table->string('equipment_type')->nullable();
-            $table->text('site_type')->nullable();
+            $table->string('site_type')->nullable();
             $table->json('cities')->nullable();
             $table->text('features')->nullable();
             $table->integer('queue')->default(0);
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->foreignId('site_id')->nullable()->constrained('sites')->onDelete('set null');
             $table->foreignId('three_id')->nullable()->constrained('threes')->onDelete('set null');
             $table->boolean('checked')->default(false);
+            $table->string('eventTitle')->default('Рассчитать такое же событие')->nullable();
             $table->timestamps();
         });
     }

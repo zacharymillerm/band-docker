@@ -24,6 +24,7 @@ class CreateSitesTable extends Migration
             $table->string('title', 512)->nullable();
             $table->string('description', 512)->nullable();
             $table->string('keyword', 512)->nullable();
+            $table->json('siteTags')->nullable(); // Add siteTags column as JSON
             $table->timestamps(); // Created at and updated at
         });
     }
