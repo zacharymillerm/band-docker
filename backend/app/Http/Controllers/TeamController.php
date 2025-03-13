@@ -45,7 +45,7 @@ class TeamController extends Controller
     {
         try {
             $lastTeam = Team::latest()->first(); // Fetch all team entries
-            return response()->json($team, 200);
+            return response()->json($lastTeam, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error fetching data'], 400);
         }

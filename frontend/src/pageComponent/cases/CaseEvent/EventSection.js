@@ -49,13 +49,13 @@ const EventSection = ({ dData }) => {
               {dData && (
                 <div>
                   <div>
-                    <p className="x24Font_2 overflowBreak">{dData.title1}</p>
+                    <p className="x24Font_2 overflowBreak" style={{ whiteSpace: 'pre-wrap' }}>{dData.title1}</p>
                     <p className="x18Font_2 eventSectionText overflowBreak">
                       {dData.content1}
                     </p>
                   </div>
                   <div>
-                    <p className="x24Font_2 overflowBreak">{dData.title2}</p>
+                    <p className="x24Font_2 overflowBreak" style={{ whiteSpace: 'pre-wrap' }}>{dData.title2}</p>
                     <p className="x18Font_2 eventSectionText overflowBreak">
                       {dData.content2}
                     </p>

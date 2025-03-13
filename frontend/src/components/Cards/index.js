@@ -80,7 +80,7 @@ const PublicationCard = ({ item }) => {
 const TextBlogCard = ({ item }) => (
   <div className="blogCard textBlogCard">
     <Image className="textBlogCardImg" src={item.url} alt="textBlog" />
-    <p>{item.content}</p>
+    <p style={{ whiteSpace: 'pre-wrap' }}>{item.content}</p>
     <p className="textBlogCardNumber">{item.viewNumber} подписчик</p>
     <div>
       <a

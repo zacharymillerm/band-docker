@@ -9,10 +9,9 @@ import { getTeam } from "../../api/teamAPI";
 import { teamPageInfo } from "../../constant/group";
 import LoadingChicha from "@/components/LoadingChicha/LoadingChicha";
 
-
 const Team = () => {
   useScrollToTop();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const Team = () => {
       } catch (error) {
         console.error("Error fetching team data:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -33,16 +32,20 @@ const Team = () => {
   }, []);
 
   if (loading) {
-    return <div className="displayCenter"><LoadingChicha /></div>; 
+    return (
+      <div className="displayCenter">
+        <LoadingChicha />
+      </div>
+    );
   }
 
   return (
     <>
       <section className="wrapper">
-        <PlantHero team={teamPageInfo} avatar={data[0]?.avatar} />
+        <PlantHero team={teamPageInfo} avatar={data?.avatar} />
         <div className="container">
           <PlantShowSection team={teamPageInfo[0]} />
-          <MasterSection links={data[0]?.links} teamImg={data[0]?.teamPic} />
+          <MasterSection links={data?.links} teamImg={data?.teamPic} />
         </div>
       </section>
     </>

@@ -16,7 +16,7 @@ const CaseCards = ({ solution, feature }) => {
       <div className="section caseEvent1">
         <div style={{ display: "grid", gap: "clamp(20px,2vw,24px)" }}>
           <p className="x30">Особенность кейса</p>
-          <p className="x20Font">{feature}</p>
+          <p className="x20Font" style={{ whiteSpace: 'pre-wrap' }}>{feature}</p>
         </div>
 
         {validSolutions?.length > 0 && (
