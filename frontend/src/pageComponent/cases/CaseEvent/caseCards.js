@@ -6,7 +6,7 @@ const CaseCards = ({ solution, feature }) => {
   // Filter out invalid solution items
   const validSolutions = solution?.filter(
     (item) =>
-      item.content?.trim() && // Ensure content is not empty
+      // item.content?.trim() && // Ensure content is not empty
       item.images?.length > 0 && // Ensure images exist
       item.images.some((img) => img.image?.trim()) // At least one image has a valid image field
   );
@@ -49,7 +49,7 @@ const CaseCards = ({ solution, feature }) => {
                   key={index}
                   style={{ display: "grid", gap: "clamp(30px,3vw,40px)" }}
                 >
-                  <p className="x20Font">{item.content}</p>
+                  <p className="x20Font" style={{ whiteSpace: 'pre-wrap' }}>{item.content}</p>
                   <div
                     className="flexWrap"
                     style={{

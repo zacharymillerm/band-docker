@@ -102,17 +102,6 @@ const inputInfo = [
   },
 ];
 
-const typeSite = [
-  "Все типы площадок",
-  "Рестораны",
-  "Конференц-залы",
-  "Загородные площадки",
-  "Концертные залы",
-  "Дом культуры",
-  "Клуб",
-  "Лофт",
-];
-
 const optionsWhatWeDid = [
   "Свет",
   "Звук",
@@ -347,8 +336,6 @@ const NewCase = () => {
       setLoading(false);
     }
   };
-
-  console.log(formData.images);
 
   return (
     <CreatePageWrapper

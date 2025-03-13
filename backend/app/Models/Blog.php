@@ -57,14 +57,4 @@ class Blog extends Model
     {
         return $this->belongsTo(Three::class, 'three_id');
     }
-
-    public function getSiteTypeAttribute()
-    {
-        return $this->site ? $this->site->site_type : [];
-    }
-
-    public function getEquipmentTypeAttribute()
-    {
-        return $this->site ? $this->site->equipment_type : [];
-    }
 }

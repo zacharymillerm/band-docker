@@ -41,8 +41,8 @@ class BlogController extends Controller
                     'site_id' => $blog->site_id,
                     'checked' => $blog->checked,
                     'eventTitle' => $blog->eventTitle,
-                    'site_type' => $blog->getSiteTypeAttribute(),
-                    'equipment_type' => $blog->getEquipmentTypeAttribute()
+                    'site_type' => $blog->site_type,
+                    'equipment_type' => $blog->equipment_type
                 ];
             }), 200);
         } catch (\Exception $e) {
@@ -121,6 +121,7 @@ class BlogController extends Controller
         }
 
         $data = $request->all();
+        $data['solution'] = $blog['solution'];
 
         if ($request->hasFile('images')) {
             if ($blog->images) {

@@ -17,7 +17,7 @@ const VideoImgSwiper = ({ item }) => {
   };
   return (
     <>
-      <div className="swiperGapWidth">
+      <div className="swiperGapWidth" >
         <div className="spaceBetween">
           <p className="x24Font_2">{item?.name}</p>
           <UserCardNumber value={item?.guests} />
@@ -46,9 +46,11 @@ const VideoImgSwiper = ({ item }) => {
           alt="swiperImg1"
           className="swiperImgBox"
           style={{
-            width: "100%",
+            width: "auto",
             height: "clamp(213px, 15vw,266px)",
             borderRadius: "5px",
+            objectFit: "cover",
+            margin: "auto"
           }}
         />
         <div>
