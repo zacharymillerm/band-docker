@@ -26,6 +26,7 @@ import {
 import { useRouter } from "next/navigation";
 import { handleDownload } from "../../constant/defaultLink";
 import Image from "next/image";
+import { AspectRatio } from "@mui/icons-material";
 
 const PendingCard = ({ item }) => {
   const navigate = useRouter();
@@ -52,10 +53,28 @@ const PublicationCard = ({ item }) => {
     navigate.push(`site-one/${item.id}`);
   };
 
+  const isVideo =
+    item.video?.endsWith(".mp4") ||
+    item.video?.endsWith(".webm") ||
+    item.video?.endsWith(".ogg");
+
   return (
     <div className="publicationCard">
       <div style={{ position: "relative" }}>
-        <video src={`${item.video}`} alt="publicationImage" />
+        {isVideo ? (
+          <video src={`${item.video}`} alt="publicationImage" />
+        ) : (
+          <img
+            src={`${item.video}`}
+            style={{
+              width: "100%",
+              height: "auto",
+              aspectRatio: "4 / 3",
+              objectFit: "cover",
+            }}
+            alt="publicationImage"
+          />
+        )}
         <CardViewNumber value={item.capacity} />
       </div>
       <div
@@ -80,7 +99,7 @@ const PublicationCard = ({ item }) => {
 const TextBlogCard = ({ item }) => (
   <div className="blogCard textBlogCard">
     <Image className="textBlogCardImg" src={item.url} alt="textBlog" />
-    <p style={{ whiteSpace: 'pre-wrap' }}>{item.content}</p>
+    <p style={{ whiteSpace: "pre-wrap" }}>{item.content}</p>
     <p className="textBlogCardNumber">{item.viewNumber} подписчик</p>
     <div>
       <a
@@ -102,6 +121,11 @@ const VideoBlogCard = ({ item }) => {
     setOpen(true);
   };
 
+  const isVideo =
+    item.video?.endsWith(".mp4") ||
+    item.video?.endsWith(".webm") ||
+    item.video?.endsWith(".ogg");
+
   const getFileType = (url) => {
     const extension = url.split(".").pop().toLowerCase();
     const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "webp"];
@@ -121,21 +145,35 @@ const VideoBlogCard = ({ item }) => {
         <h3>{item.title}</h3>
         {item.video && getFileType(item.video) === "video" && (
           <div style={{ position: "relative" }}>
-            <video
-              style={{
-                width: "100%",
-                height: "clamp(168px, 15vw,201px)",
-                borderRadius: "5px",
-              }}
-            >
-              <source src={`${item.video}`} type="video/mp4" />
-            </video>
-            <Image
-              src={whitePlay}
-              onClick={handleOpen}
-              alt="whitePlay"
-              className="whitePlayImg"
-            />
+            {isVideo ? (
+              <video
+                style={{
+                  width: "100%",
+                  height: "clamp(168px, 15vw,201px)",
+                  borderRadius: "5px",
+                }}
+                src={item.video}
+              />
+            ) : (
+              <img
+                style={{
+                  width: "100%",
+                  height: "clamp(168px, 15vw,201px)",
+                  objectFit: "cover",
+                  borderRadius: "5px",
+                }}
+                src={item.video}
+                alt="img"
+              />
+            )}
+            {isVideo && (
+              <Image
+                src={whitePlay}
+                onClick={handleOpen}
+                alt="whitePlay"
+                className="whitePlayImg"
+              />
+            )}
           </div>
         )}
         {item.video && getFileType(item.video) === "image" && (

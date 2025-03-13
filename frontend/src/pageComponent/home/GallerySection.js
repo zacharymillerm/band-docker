@@ -53,6 +53,11 @@ const GallerySection = ({ title, galleryType }) => {
     navigate.push(url);
   };
 
+  const isVideo = (filename) =>
+    filename?.endsWith(".mp4") ||
+    filename?.endsWith(".webm") ||
+    filename?.endsWith(".ogg");
+
   return (
     <div
       id="gallerySection"
@@ -75,18 +80,36 @@ const GallerySection = ({ title, galleryType }) => {
             <div className="gallery galleryMain">
               {galleryInfo.map((image, index) => (
                 <div key={index} style={{ width: `${image.width}px` }}>
-                  <video
-                    src={image.video}
-                    alt={image.name}
-                    style={{
-                      marginTop: `${image.top}px`,
-                      width: "100%",
-                      height: "auto",
-                    }}
-                    onClick={() => {
-                      navigate.push(`/case-one/${image?.id}`);
-                    }}
-                  />
+                  {isVideo(image.video) ? (
+                    <video
+                      src={image.video}
+                      alt={image.name}
+                      style={{
+                        marginTop: `${image.top}px`,
+                        width: "100%",
+                        height: "auto",
+                      }}
+                      onClick={() => {
+                        navigate.push(`/case-one/${image?.id}`);
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src={image.video}
+                      alt={image.name}
+                      style={{
+                        marginTop: `${image.top}px`,
+                        width: "100%",
+                        height: "auto",
+                        aspectRatio: "16 / 9",
+                        objectFit: "cover",
+                      }}
+                      onClick={() => {
+                        navigate.push(`/case-one/${image?.id}`);
+                      }}
+                    />
+                  )}
+
                   <p className="x16">{image.name}</p>
                   <p className="x12">{image.venue}</p>
                 </div>
