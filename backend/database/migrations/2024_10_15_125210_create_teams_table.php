@@ -10,14 +10,14 @@ class CreateTeamsTable extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('tag1')->nullable();
-            $table->string('tag2')->nullable();
-            $table->string('tag3')->nullable();
-            $table->string('tag4')->nullable();
-            $table->string('tag5')->nullable();
-            $table->string('tag6')->nullable();
-            $table->string('tag7')->nullable();
-            $table->string('tag8')->nullable();
+            $table->text('tag1')->nullable();
+            $table->text('tag2')->nullable();
+            $table->text('tag3')->nullable();
+            $table->text('tag4')->nullable();
+            $table->text('tag5')->nullable();
+            $table->text('tag6')->nullable();
+            $table->text('tag7')->nullable();
+            $table->text('tag8')->nullable();
             $table->text('competencies')->nullable(); // Use json type for competencies
             $table->string('links')->nullable();
             $table->timestamps();
