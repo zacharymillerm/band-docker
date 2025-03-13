@@ -21,9 +21,9 @@ class CreateEquipsTable extends Migration
             $table->integer('queue')->default(0);
             $table->text('description')->nullable();
             $table->text('dimension')->nullable(); 
-            $table->text('blog_type')->nullable();
-            $table->text('site_type')->nullable();
-            $table->text('images')->nullable(); 
+            $table->string('blog_type')->nullable();
+            $table->string('site_type')->nullable();
+            $table->string('images', 2048)->nullable(); 
             $table->timestamps();
         });
     }

@@ -18,12 +18,12 @@ class CreateSitesTable extends Migration
             $table->string('video')->nullable();
             $table->integer('queue')->default(0); // Default value for queue
             $table->text('tags')->nullable(); // Store tags as a JSON array
-            $table->text('equipment_type')->nullable();
-            $table->text('blog_type')->nullable();
+            $table->string('equipment_type')->nullable();
+            $table->string('blog_type')->nullable();
             $table->json('cities')->nullable();
-            $table->text('title')->nullable();
-            $table->text('description')->nullable();
-            $table->text('keyword')->nullable();
+            $table->string('title', 512)->nullable();
+            $table->string('description', 512)->nullable();
+            $table->string('keyword', 512)->nullable();
             $table->timestamps(); // Created at and updated at
         });
     }
