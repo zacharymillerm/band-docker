@@ -15,7 +15,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         $email = 'admin@example.com';
-        $email2 = 'admin2@example.com';
+        $email2 = 'kevin@example.com';
+        $email3 = 'kevin@example.com';
         // Delete the user if they exist
         User::where('email', $email)->delete();
 
@@ -31,9 +32,20 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'superadmin',
+            'name' => 'Kevin',
             'lastname' => 'dev',
             'email' => $email2,
+            'password' => Hash::make('password123'),
+            'adding' => 1,
+            'editing' => 1,
+            'deleting' => 1,
+            'role' => 'admin',
+        ]);
+
+        User::create([
+            'name' => 'Nik',
+            'lastname' => 'dev',
+            'email' => $email3,
             'password' => Hash::make('password123'),
             'adding' => 1,
             'editing' => 1,
