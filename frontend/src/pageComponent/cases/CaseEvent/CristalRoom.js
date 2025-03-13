@@ -5,6 +5,11 @@ import { ArrowDefaultButton, Banquet } from "@/components/Buttons";
 const CristalRoom = ({ site }) => {
   const navigate = useRouter();
 
+  const isVideo =
+    site.video?.endsWith(".mp4") ||
+    site.video?.endsWith(".webm") ||
+    site.video?.endsWith(".ogg");
+
   const handleClick = () => {
     navigate.push(`/site-one/${site.id}`);
   };
@@ -13,7 +18,18 @@ const CristalRoom = ({ site }) => {
     <section className="section2">
       <div className="cristalRoomWrapper spaceBetween">
         <div className="cristalLeft">
-          <video src={`${site?.video}`} />
+          {isVideo ? (
+            <video
+              src={site?.video}
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            <img
+              src={site?.video}
+              alt="leftimage"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            ></img>
+          )}
         </div>
         <div className="cristalRight flexWrapBetween">
           <div className="cristalItem1">

@@ -15,9 +15,15 @@ const VideoImgSwiper = ({ item }) => {
   const handleLink = (url) => {
     navigate.push(url);
   };
+
+  const isVideo =
+    item.video?.endsWith(".mp4") ||
+    item.video?.endsWith(".webm") ||
+    item.video?.endsWith(".ogg");
+
   return (
     <>
-      <div className="swiperGapWidth" >
+      <div className="swiperGapWidth">
         <div className="spaceBetween">
           <p className="x24Font_2">{item?.name}</p>
           <UserCardNumber value={item?.guests} />
@@ -26,20 +32,35 @@ const VideoImgSwiper = ({ item }) => {
           <Banquet title={item?.name} />
         </div>
         <div style={{ position: "relative" }}>
-          <video
-            style={{
-              width: "100%",
-              height: "clamp(213px, 15vw,266px)",
-              borderRadius: "5px",
-            }}
-            src={`${item?.video}`}
-          />
-          <Image
-            src={whitePlay}
-            onClick={handleOpen}
-            alt="whitePlay"
-            className="whiteMiddlePlayImg"
-          />
+          {isVideo ? (
+            <video
+              style={{
+                width: "100%",
+                height: "clamp(213px, 15vw,266px)",
+                borderRadius: "5px",
+              }}
+              src={`${item?.video}`}
+            />
+          ) : (
+            <img
+              style={{
+                width: "100%",
+                height: "clamp(213px, 15vw,266px)",
+                borderRadius: "5px",
+                objectFit: "cover",
+              }}
+              src={`${item?.video}`}
+              alt="img"
+            />
+          )}
+          {isVideo && (
+            <Image
+              src={whitePlay}
+              onClick={handleOpen}
+              alt="whitePlay"
+              className="whiteMiddlePlayImg"
+            />
+          )}
         </div>
         <img
           src={`${item?.images?.length > 0 && item.images[0]}`}
@@ -50,7 +71,7 @@ const VideoImgSwiper = ({ item }) => {
             height: "clamp(213px, 15vw,266px)",
             borderRadius: "5px",
             objectFit: "cover",
-            margin: "auto"
+            margin: "auto",
           }}
         />
         <div>

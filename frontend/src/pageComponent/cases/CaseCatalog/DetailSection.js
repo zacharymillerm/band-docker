@@ -64,7 +64,7 @@ const typeSite = [
   "Концертные залы",
   "Дом культуры",
   "Клуб",
-  "Лофт" 
+  "Лофт",
 ];
 
 const DetailSection = ({
@@ -75,8 +75,6 @@ const DetailSection = ({
   checkText,
   activeType,
 }) => {
-
-  console.log(data)
   type === "case" ? "КЕЙСЫ" : type === "platform" ? "ПЛОЩАДКИ" : "ОБОРУДОВАНИЕ";
   const [result, setResult] = useState([]);
   const [sliceData, setSliceData] = useState([]);

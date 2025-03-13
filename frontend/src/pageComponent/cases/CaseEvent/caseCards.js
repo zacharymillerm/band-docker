@@ -6,9 +6,8 @@ const CaseCards = ({ solution, feature }) => {
   // Filter out invalid solution items
   const validSolutions = solution?.filter(
     (item) =>
-      // item.content?.trim() && // Ensure content is not empty
-      item.images?.length > 0 && // Ensure images exist
-      item.images.some((img) => img.image?.trim()) // At least one image has a valid image field
+      item.content?.trim() ||
+      (item.images?.length > 0 && item.images.some((img) => img.image?.trim())) // At least one image has a valid image field
   );
 
   return (
@@ -16,7 +15,9 @@ const CaseCards = ({ solution, feature }) => {
       <div className="section caseEvent1">
         <div style={{ display: "grid", gap: "clamp(20px,2vw,24px)" }}>
           <p className="x30">Особенность кейса</p>
-          <p className="x20Font" style={{ whiteSpace: 'pre-wrap' }}>{feature}</p>
+          <p className="x20Font" style={{ whiteSpace: "pre-wrap" }}>
+            {feature}
+          </p>
         </div>
 
         {validSolutions?.length > 0 && (
@@ -49,7 +50,9 @@ const CaseCards = ({ solution, feature }) => {
                   key={index}
                   style={{ display: "grid", gap: "clamp(30px,3vw,40px)" }}
                 >
-                  <p className="x20Font" style={{ whiteSpace: 'pre-wrap' }}>{item.content}</p>
+                  <p className="x20Font" style={{ whiteSpace: "pre-wrap" }}>
+                    {item.content}
+                  </p>
                   <div
                     className="flexWrap"
                     style={{
@@ -85,7 +88,13 @@ const CaseCards = ({ solution, feature }) => {
                             borderRadius: "10px",
                           }}
                         >
-                          <Image width={700} height={700} src={image.image} alt={idx} unoptimized={true} />
+                          <Image
+                            width={700}
+                            height={700}
+                            src={image.image}
+                            alt={idx}
+                            unoptimized={true}
+                          />
                           {image?.title && (
                             <p className="x18_3">{image.title}</p>
                           )}
