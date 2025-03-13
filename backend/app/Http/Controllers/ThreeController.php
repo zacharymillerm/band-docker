@@ -7,6 +7,7 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\DB;
 
 class ThreeController extends Controller
 {
@@ -31,13 +32,13 @@ class ThreeController extends Controller
     {
         $data = $request->all();
         $data['video'] = $request->file('video') ? uploadVideoOrImage($request->file('video'), 'three') : '';
-        try{
+        try {
             $newThree = Three::create($data);
             return response()->json([
                 'message' => 'Three created successfully!',
                 'Three' => $newThree
             ], 200);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error('Error saving data: ' . $e->getMessage());
             return response()->json(['error' => 'Error saving data'], 400);
         }
@@ -46,7 +47,7 @@ class ThreeController extends Controller
     // public function store(Request $request)
     // {
     //     $data = $request->all();
-        
+
     //     if ($request->file('video')) {
     //         try {
     //             $uploadedFileUrl = Cloudinary::uploadVideo($request->file('video')->getRealPath(), [
@@ -80,16 +81,15 @@ class ThreeController extends Controller
                 ? uploadVideoOrImage($request->file('video'), 'three') // Adjust path as needed
                 : $three->video;
 
-                if ($request->file('video')) {
-                    \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $three->video));
-                }
+            if ($request->file('video')) {
+                \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $three->video));
+            }
             $three->update($data);
 
             return response()->json([
                 'message' => 'three successfully updated!',
                 'updatedthree' => $three,
             ], 200);
-
         } catch (\Exception $e) {
             \Log::error('Error updating three: ' . $e->getMessage());
             return response()->json(['error' => 'Error updating three data'], 400);
@@ -99,13 +99,13 @@ class ThreeController extends Controller
     {
         try {
             $three = Three::findOrFail($id);
-            if($three->video){
+            if ($three->video) {
                 \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $three->video));
             }
             Blog::where('three_id', $id)->update(['three_id' => null]);
             $three->delete();
 
-            $threes = Three::all(); 
+            $threes = Three::all();
             return response()->json($threes, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error deleting three'], 400);
@@ -114,6 +114,8 @@ class ThreeController extends Controller
 
     public function swapThreeQueue(Request $request)
     {
+        DB::beginTransaction(); // Start a database transaction
+
         try {
             // Validate the request
             $request->validate([
@@ -122,19 +124,36 @@ class ThreeController extends Controller
             ]);
 
             // Get the two blogs
-            $firstBlog = Blog::findOrFail($request->firstBlogId);
-            $secondBlog = Blog::findOrFail($request->secondBlogId);
-            // Simple swap of values
-            $temp1 = $firstBlog->id;
-            $firstBlog->id = 99999999;
+            $firstBlog = Three::findOrFail($request->firstBlogId);
+            $secondBlog = Three::findOrFail($request->secondBlogId);
+
+            // Temporarily disable foreign key checks (if needed)
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+            // Generate a temporary ID that is guaranteed not to conflict
+            $tempId = Three::max('id') + 1; // Use the highest ID + 1 as a temporary ID
+
+            // Swap the IDs
+            $firstBlogId = $firstBlog->id;
+            $secondBlogId = $secondBlog->id;
+
+            // Update the first blog to the temporary ID
+            $firstBlog->id = $tempId;
             $firstBlog->save();
-            $temp2 = $secondBlog->id;
-            $secondBlog->id = $temp1;
+
+            // Update the second blog to the first blog's ID
+            $secondBlog->id = $firstBlogId;
             $secondBlog->save();
-            $firstBlog->id=$temp2;
+
+            // Update the first blog to the second blog's ID
+            $firstBlog->id = $secondBlogId;
             $firstBlog->save();
-            
-            
+
+            // Re-enable foreign key checks
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            DB::commit(); // Commit the transaction
+
             return response()->json([
                 'message' => 'Blog IDs swapped successfully',
                 'blogs' => [
@@ -142,8 +161,8 @@ class ThreeController extends Controller
                     'second' => $secondBlog->fresh()
                 ]
             ]);
-
         } catch (\Exception $error) {
+            DB::rollBack(); // Roll back the transaction on error
             \Log::error('Error swapping blog IDs: ' . $error->getMessage());
             return response()->json([
                 'error' => 'Server error',
@@ -151,6 +170,4 @@ class ThreeController extends Controller
             ], 500);
         }
     }
-
-
 }

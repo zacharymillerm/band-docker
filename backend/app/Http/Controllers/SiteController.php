@@ -116,6 +116,8 @@ class SiteController extends Controller
 
     public function swapSitesQueue(Request $request)
     {
+        DB::beginTransaction(); // Start a database transaction
+
         try {
             // Validate the request
             $request->validate([
@@ -123,58 +125,46 @@ class SiteController extends Controller
                 'secondBlogId' => 'required|exists:sites,id'
             ]);
 
-            DB::transaction(function () use ($request) {
-                // Get the two blogs
-                $firstBlog = Site::findOrFail($request->firstBlogId);
-                $secondBlog = Site::findOrFail($request->secondBlogId);
+            // Get the two blogs
+            $firstBlog = Site::findOrFail($request->firstBlogId);
+            $secondBlog = Site::findOrFail($request->secondBlogId);
 
-                // Temporarily update the blogs table to avoid foreign key conflicts
-                Blog::where('site_id', $firstBlog->id)->update(['site_id' => null]);
-                Blog::where('site_id', null)->whereIn('id', [$request->firstBlogId, $request->secondBlogId])
-                    ->update(['site_id' => DB::raw("CASE
-                        WHEN id = {$request->firstBlogId} THEN {$request->secondBlogId}
-                        WHEN id = {$request->secondBlogId} THEN {$request->firstBlogId}
-                    END")]);
-                Blog::where('site_id', $secondBlog->id)->update(['site_id' => null]);
-                Blog::where('site_id', null)->whereIn('id', [$request->firstBlogId, $request->secondBlogId])
-                    ->update(['site_id' => DB::raw("CASE
-                        WHEN id = {$request->firstBlogId} THEN {$request->secondBlogId}
-                        WHEN id = {$request->secondBlogId} THEN {$request->firstBlogId}
-                    END")]);
-                // Swap site IDs using a temporary placeholder
-                $tempId = 99999999;
-                $firstBlog->id = $tempId;
-                $firstBlog->save();
+            // Temporarily disable foreign key checks (if needed)
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-                $secondBlog->id = $request->firstBlogId;
-                $secondBlog->save();
+            // Generate a temporary ID that is guaranteed not to conflict
+            $tempId = Site::max('id') + 1; // Use the highest ID + 1 as a temporary ID
 
-                $firstBlog->id = $request->secondBlogId;
-                $firstBlog->save();
+            // Swap the IDs
+            $firstBlogId = $firstBlog->id;
+            $secondBlogId = $secondBlog->id;
 
-                // Blog::whereIn('site_id', [$request->firstBlogId, $request->secondBlogId])
-                // ->update([
-                //     'site_id' => DB::raw("CASE
-                //         WHEN site_id = {$request->firstBlogId} THEN {$request->secondBlogId}
-                //         WHEN site_id = {$request->secondBlogId} THEN {$request->firstBlogId}
-                //     END")
-                // ]);
-                // Restore the foreign keys in the blogs table
-                // Blog::where('site_id', null)->whereIn('id', [$request->firstBlogId, $request->secondBlogId])
-                //     ->update(['site_id' => DB::raw("CASE
-                //         WHEN id = {$request->firstBlogId} THEN {$request->secondBlogId}
-                //         WHEN id = {$request->secondBlogId} THEN {$request->firstBlogId}
-                //     END")]);
+            // Update the first blog to the temporary ID
+            $firstBlog->id = $tempId;
+            $firstBlog->save();
 
-                return response()->json([
-                    'message' => 'Site IDs swapped successfully',
-                    'blogs' => [
-                        'first' => $firstBlog->fresh(),
-                        'second' => $secondBlog->fresh()
-                    ]
-                ]);
-            });
+            // Update the second blog to the first blog's ID
+            $secondBlog->id = $firstBlogId;
+            $secondBlog->save();
+
+            // Update the first blog to the second blog's ID
+            $firstBlog->id = $secondBlogId;
+            $firstBlog->save();
+
+            // Re-enable foreign key checks
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            DB::commit(); // Commit the transaction
+
+            return response()->json([
+                'message' => 'Blog IDs swapped successfully',
+                'blogs' => [
+                    'first' => $firstBlog->fresh(),
+                    'second' => $secondBlog->fresh()
+                ]
+            ]);
         } catch (\Exception $error) {
+            DB::rollBack(); // Roll back the transaction on error
             \Log::error('Error swapping blog IDs: ' . $error->getMessage());
             return response()->json([
                 'error' => 'Server error',

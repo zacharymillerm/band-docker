@@ -10,7 +10,7 @@ class UploadController extends Controller
     public function uploadBlogs(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/blogs', 'public');
@@ -22,7 +22,7 @@ class UploadController extends Controller
     public function uploadSite(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/sites', 'public');
@@ -34,7 +34,7 @@ class UploadController extends Controller
     public function uploadEquipment(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/equipments', 'public');
@@ -46,7 +46,7 @@ class UploadController extends Controller
     public function uploadFactory(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/factorys', 'public');
@@ -58,7 +58,7 @@ class UploadController extends Controller
     public function uploadReview(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/reviews', 'public');
@@ -70,7 +70,7 @@ class UploadController extends Controller
     public function uploadThree(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/three', 'public');
@@ -82,7 +82,7 @@ class UploadController extends Controller
     public function uploadSolution(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/solution', 'public');
@@ -94,7 +94,7 @@ class UploadController extends Controller
     public function uploadAttach(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/attach', 'public');
@@ -106,7 +106,7 @@ class UploadController extends Controller
     public function uploadRental(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4', // Adjust mime types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust mime types and size limit as necessary
         ]);
 
         $path = $request->file('file')->store('uploads/rental', 'public');
@@ -118,7 +118,7 @@ class UploadController extends Controller
     protected function validateRequest(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,mp4,mov,avi', // Adjust the file types and size limit as necessary
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,bmp,webp,svg,mp4,mov,avi,wmv,flv,mkv,webm', // Adjust the file types and size limit as necessary
         ]);
     }
 }

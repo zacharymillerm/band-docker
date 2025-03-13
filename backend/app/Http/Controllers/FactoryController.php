@@ -12,7 +12,7 @@ class FactoryController extends Controller
 {
     public function index()
     {
-        $factory = FactoryShow::orderBy('id', 'desc')->get(); 
+        $factory = FactoryShow::orderBy('id', 'desc')->get();
         return response()->json($factory);
     }
     public function top()
@@ -28,7 +28,7 @@ class FactoryController extends Controller
         if (!$factory) {
             return response()->json(['message' => 'Factory not found'], 404);
         }
- 
+
         return response()->json($factory);
     }
 
@@ -46,7 +46,7 @@ class FactoryController extends Controller
             $file = $request->file('video');
 
             $filePath = uploadVideoOrImage($file, 'factory');
-            
+
             $factory = FactoryShow::create([
                 'title' => $request->input('title'),
                 'queue' => $request->input('queue'),
@@ -110,28 +110,30 @@ class FactoryController extends Controller
 
     public function destroy($id)
     {
-        try{
+        try {
             $factory = FactoryShow::find($id);
 
-        if (!$factory) {
-            return response()->json(['message' => 'factory not found'], 404);
-        }
+            if (!$factory) {
+                return response()->json(['message' => 'factory not found'], 404);
+            }
 
-        if ($factory->video) {
-            \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $factory->video));
-        }
+            if ($factory->video) {
+                \Storage::disk('public')->delete(str_replace(url('storage') . '/', '', $factory->video));
+            }
 
-        $factory->delete();
-        $factorys=FactoryShow::all();
+            $factory->delete();
+            $factorys = FactoryShow::all();
 
-        return response()->json($factorys, 200);
-        }catch (\Exception $e) {
+            return response()->json($factorys, 200);
+        } catch (\Exception $e) {
             return response()->json(['error' => 'Error deleting factory'], 400);
         }
     }
 
     public function swapFactoryQueue(Request $request)
     {
+        DB::beginTransaction(); // Start a database transaction
+
         try {
             // Validate the request
             $request->validate([
@@ -139,25 +141,36 @@ class FactoryController extends Controller
                 'secondBlogId' => 'required|exists:factory_shows,id'
             ]);
 
-            // Get the two records
+            // Get the two blogs
             $firstBlog = FactoryShow::findOrFail($request->firstBlogId);
             $secondBlog = FactoryShow::findOrFail($request->secondBlogId);
 
-            // Swap the IDs using a temporary high value
-            $tempId = $firstBlog->id;
-            $firstBlog->id = 99999999;
+            // Temporarily disable foreign key checks (if needed)
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+            // Generate a temporary ID that is guaranteed not to conflict
+            $tempId = FactoryShow::max('id') + 1; // Use the highest ID + 1 as a temporary ID
+
+            // Swap the IDs
+            $firstBlogId = $firstBlog->id;
+            $secondBlogId = $secondBlog->id;
+
+            // Update the first blog to the temporary ID
+            $firstBlog->id = $tempId;
             $firstBlog->save();
 
-            $firstBlogOriginalId = $secondBlog->id;
-            $secondBlog->id = $tempId;
+            // Update the second blog to the first blog's ID
+            $secondBlog->id = $firstBlogId;
             $secondBlog->save();
 
-            $firstBlog->id = $firstBlogOriginalId;
+            // Update the first blog to the second blog's ID
+            $firstBlog->id = $secondBlogId;
             $firstBlog->save();
 
-            // Reset the auto-increment value after swapping
-            $maxId = FactoryShow::max('id');
-            DB::statement("ALTER TABLE factory_shows AUTO_INCREMENT = " . ($maxId + 1));
+            // Re-enable foreign key checks
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            DB::commit(); // Commit the transaction
 
             return response()->json([
                 'message' => 'Blog IDs swapped successfully',
@@ -166,8 +179,8 @@ class FactoryController extends Controller
                     'second' => $secondBlog->fresh()
                 ]
             ]);
-
         } catch (\Exception $error) {
+            DB::rollBack(); // Roll back the transaction on error
             \Log::error('Error swapping blog IDs: ' . $error->getMessage());
             return response()->json([
                 'error' => 'Server error',
